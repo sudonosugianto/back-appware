@@ -7,4 +7,6 @@ db = SQLAlchemy(app)
 from modelUsers import Users
 from modelItems import Items
 from modelCat import Category
+from modelPackages import *
+
 ######### Finish Import Model ########
