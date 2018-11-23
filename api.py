@@ -1,5 +1,4 @@
 import sys, json
-from functools import wraps
 from configs import app
 from configs import manager
 from configs import api
@@ -13,7 +12,7 @@ from resourceLogin import LoginResources
 
 ######### Tempat untuk Membuat Endpoint ################
 # api.add_resource(Client, '/client/<int:id>' , '/client')
-api.add_resource(UserResources, "/api/users/register")
+api.add_resource(UserResources, "/api/users")
 api.add_resource(LoginResources, "/api/users/login")
 ################# Finished Endpoint ################
 
