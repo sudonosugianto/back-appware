@@ -75,3 +75,15 @@ class ItemResources(Resource):
             "message": "add Item success",
             "item": marshal(qry, item_fields)
         }, 200
+
+    @jwt_required
+    def delete(self,id=None):
+        qry = Items.query.get(ident=id)
+
+        if qry == None :
+            return {"message":"Items Not Found"}, 404
+            
+        db.session.delete(qry)
+        db.session.commit()
+
+        return {"message":"Delete Items Successfull"}, 200

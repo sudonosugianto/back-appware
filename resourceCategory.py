@@ -59,11 +59,11 @@ class CategoryResources(Resource):
 
     @jwt_required
     def delete(self,id=None):
-        qry = Category.query.get(ident=id).first()
+        qry = Category.query.get(ident=id)
 
         if qry == None :
             return {"message":"Category Not Found"}, 404
-            
+
         db.session.delete(qry)
         db.session.commit()
 
