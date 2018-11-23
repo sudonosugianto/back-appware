@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, 
 from models import db
 ####### Tempat import Model#########
 from modelItems import Items
+from modelCat import Category
 ####### Finish import Model#########
 
 ####### Tempat import Model#########
@@ -13,6 +14,19 @@ from marshalField import item_fields
 
 class ItemResources(Resource):
     # Untuk Create Item
+    @jwt_required
+    def get(self,id=None):
+        # Filter by ID  
+        userID = get_jwt_identity()
+        parser = reqparse.RequestParser()
+        parser.add_argument("category", type=str, location="args", help="CategoryID must Exist")
+        args = parser.parse_args()
+        qry = Items.query.join(Items.catID).filter(Items.userID == userID, Category.category == args['category']).first()
+        
+        
+        return {"message":"Display Item Success",
+                "item": marshal}
+    
     @jwt_required
     def post(self):
         userID = get_jwt_identity()
