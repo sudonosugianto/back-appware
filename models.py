@@ -4,7 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy(app)
 
 ######### Tempat untuk Import Model ########
-from modelUsers import *
+from modelUsers import Users
+from modelItems import Items
+from modelCat import Category
 from modelPackages import *
 
 ######### Finish Import Model ########

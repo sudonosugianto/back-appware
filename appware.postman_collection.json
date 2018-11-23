@@ -1,0 +1,147 @@
+{
+	"id": "5a90fdea-c04e-fdf8-f698-792a1cc51b81",
+	"name": "appware",
+	"description": "",
+	"order": [
+		"ea7af939-f8ee-342c-1b68-023639485ff6",
+		"15cbf113-1dd6-a5fa-2ee9-ba8d5acfb2f9",
+		"a68770f6-1e3f-5b81-8d39-cf52ca48c41e",
+		"aa14a20a-18dd-379a-e9d8-e7e2d88f9596"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1542957886693,
+	"owner": "5604301",
+	"public": false,
+	"requests": [
+		{
+			"id": "15cbf113-1dd6-a5fa-2ee9-ba8d5acfb2f9",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{localhost}}/api/users/login",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1542964986095,
+			"name": "LOGIN USER",
+			"description": "",
+			"collectionId": "5a90fdea-c04e-fdf8-f698-792a1cc51b81",
+			"responses": [],
+			"rawModeData": "{\n\t\"email\": \"jisoo@gmail.com\",\n\t\"password\": \"password\"\n}"
+		},
+		{
+			"id": "a68770f6-1e3f-5b81-8d39-cf52ca48c41e",
+			"headers": "Authorization: {{user2}}\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "{{user2}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{localhost}}/api/users",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "DELETE",
+			"collectionId": "5a90fdea-c04e-fdf8-f698-792a1cc51b81",
+			"data": null,
+			"dataMode": "params",
+			"name": "DELETE USER",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1542964981688,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "aa14a20a-18dd-379a-e9d8-e7e2d88f9596",
+			"headers": "Content-Type: application/json\nAuthorization: {{user2}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{user2}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{localhost}}/api/users",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1542965610768,
+			"name": "EDIT USER",
+			"description": "",
+			"collectionId": "5a90fdea-c04e-fdf8-f698-792a1cc51b81",
+			"responses": [],
+			"rawModeData": "{\n\t\"fullname\": \"Park Rose\",\n\t\"username\": \"rose\",\n\t\"password\": \"password\",\n\t\"email\": \"rose@gmail.com\",\n\t\"phone_number\": \"1234\"\n}"
+		},
+		{
+			"id": "ea7af939-f8ee-342c-1b68-023639485ff6",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{localhost}}/api/users",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1542964349296,
+			"name": "REGISTER USER",
+			"description": "",
+			"collectionId": "5a90fdea-c04e-fdf8-f698-792a1cc51b81",
+			"responses": [],
+			"rawModeData": "{\n\t\"fullname\": \"Kim Jennie\",\n\t\"username\": \"jennie\",\n\t\"password\": \"password\",\n\t\"email\": \"jennie@gmail.com\",\n\t\"phone_number\": \"1234\"\n}"
+		}
+	]
+}
