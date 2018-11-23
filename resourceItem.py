@@ -21,7 +21,8 @@ class ItemResources(Resource):
         parser.add_argument("item", type=str, location="json", required=True, help="Item must be string and exist")
         parser.add_argument("picture", type=str, location="json", required=False, help="Picture must be string and exist")
         parser.add_argument("size", type=int, location="json", required=True, help="Size must be integer")
-        parser.add_argument("SKU", type=int,location="json",required = False, help="Stock Keeping Unit must be Integer")
+        parser.add_argument("unit", type=str, location="json", required=False, help="Unit must be String")
+        parser.add_argument("SKU", type=str,location="json",required = False, help="Stock Keeping Unit must be Integer")
         args = parser.parse_args()
 
         add_item = Items(
@@ -30,6 +31,7 @@ class ItemResources(Resource):
             item= args['item'],
             picture= args['picture'],
             size= args['size'],
+            unit= args['unit'],
             SKU = args['SKU']
         )
         db.session.add(add_item)

@@ -4,7 +4,7 @@ from modelCat import Category
 
 class Items(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    userItem = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'),nullable=False) 
+    userID = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'),nullable=False) 
     catID = db.Column(db.Integer, db.ForeignKey('category.id',ondelete='CASCADE'),nullable=False, default="Uncategorized") 
     item = db.Column(db.String(50), nullable=False)
     picture = db.Column(db.String(50), nullable=True)
