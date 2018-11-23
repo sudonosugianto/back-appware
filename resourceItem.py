@@ -24,7 +24,6 @@ class ItemResources(Resource):
         parser.add_argument("unit", type=str, location="json", required=False, help="Unit must be String")
         parser.add_argument("SKU", type=str,location="json",required = False, help="Stock Keeping Unit must be Integer")
         args = parser.parse_args()
-
         add_item = Items(
             userID = userID,
             catID = args['catID'],
