@@ -16,7 +16,7 @@ from resourceCategory import CategoryResources
 # api.add_resource(Client, '/client/<int:id>' , '/client')
 api.add_resource(UserResources, "/api/users")
 api.add_resource(LoginResources, "/api/users/login")
-api.add_resource(ItemResources, "/api/users/item")
+api.add_resource(ItemResources, "/api/users/item", "/api/users/item/<int:id>")
 api.add_resource(CategoryResources, "/api/users/category")
 ################# Finished Endpoint ################
 
