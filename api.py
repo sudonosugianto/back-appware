@@ -1,16 +1,23 @@
 import sys, json
-from functools import wraps
 from configs import app
 from configs import manager
 from configs import api
 
 ###### Tempat Untuk Import Resource #########
-from resourceClient import Client
+# from resourceClient import Client
+from resourceUser import UserResources
+from resourceLogin import LoginResources
+from resourceItem import ItemResources
+from resourceCategory import CategoryResources
 ############## Finish Style ##################
 
 
 ######### Tempat untuk Membuat Endpoint ################
-api.add_resource(Client, '/client/<int:id>' , '/client')
+# api.add_resource(Client, '/client/<int:id>' , '/client')
+api.add_resource(UserResources, "/api/users")
+api.add_resource(LoginResources, "/api/users/login")
+api.add_resource(ItemResources, "/api/users/item")
+api.add_resource(CategoryResources, "/api/users/category")
 ################# Finished Endpoint ################
 
 if __name__ == '__main__':
