@@ -67,6 +67,8 @@ class ItemResources(Resource):
         if args['SKU'] != None:
             qry.SKU = args['SKU']
         
+        qry.updated_at = db.func.current_timestamp()
+        
         db.session.add(qry)
         db.session.commit() 
         return {
