@@ -15,7 +15,7 @@ class ItemResources(Resource):
     # Untuk Create Item
     @jwt_required
     def post(self):
-        userItem = get_jwt_identity()
+        userID = get_jwt_identity()
         parser = reqparse.RequestParser()
         parser.add_argument("catID", type=int, location="json", help="CategoryID must Exist")
         parser.add_argument("item", type=str, location="json", required=True, help="Item must be string and exist")
@@ -25,7 +25,7 @@ class ItemResources(Resource):
         args = parser.parse_args()
 
         add_item = Items(
-            userItem = userItem,
+            userID = userID,
             catID = args['catID'],
             item= args['item'],
             picture= args['picture'],

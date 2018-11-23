@@ -7,6 +7,8 @@ from configs import api
 # from resourceClient import Client
 from resourceUser import UserResources
 from resourceLogin import LoginResources
+from resourceItem import ItemResources
+from resourceCategory import CategoryResources
 ############## Finish Style ##################
 
 
@@ -14,6 +16,8 @@ from resourceLogin import LoginResources
 # api.add_resource(Client, '/client/<int:id>' , '/client')
 api.add_resource(UserResources, "/api/users")
 api.add_resource(LoginResources, "/api/users/login")
+api.add_resource(ItemResources, "/api/item")
+api.add_resource(CategoryResources, "/api/item")
 ################# Finished Endpoint ################
 
 if __name__ == '__main__':

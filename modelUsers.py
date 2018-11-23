@@ -13,7 +13,7 @@ class Users(db.Model):
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
 
-    Items = db.relationship('Items', backref='userItem', lazy=True)
+    Items = db.relationship('Items', backref='users', lazy=True)
 
     def __repr__(self):
         return "<Users %r>" % self.id
