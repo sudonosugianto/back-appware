@@ -1,5 +1,5 @@
 from models import db
-from models import Items
+# from models import Items
 
 class Packages(db.Model):
     id = db.Column(db.Integer, primary_key=True)

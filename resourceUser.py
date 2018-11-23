@@ -7,15 +7,11 @@ from models import db
 from modelUsers import Users
 ####### Finish import Model#########
 
-# from configs import user_required
-
 
 ####### Tempat import Marshal#########
 from marshalField import user_fields
 ####### Finish import Marshal#########
 
-# class User(Resource):
-#     pass
 
 class UserResources(Resource):
 
