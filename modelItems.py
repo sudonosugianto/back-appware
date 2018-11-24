@@ -14,5 +14,10 @@ class Items(db.Model):
     status = db.Column(db.Boolean, default=1)
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
+
+    # relationship
+    packages =  db.relationship('Packages', backref='Items', lazy=True)
+
+
     def __repr__(self):
         return "<Items %r>" % self.id

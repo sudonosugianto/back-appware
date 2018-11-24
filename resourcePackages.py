@@ -23,6 +23,7 @@ class PackageResources(Resource):
         parser.add_argument("items_quantity", type=int, location="json", required=False, help="items_quantity must be integer")
 
         args = parser.parse_args()
+        my_identity = get_jwt_identity()
 
         qry = Packages.query.filter_by(package_name=args["package_name"]).first()
 
@@ -30,6 +31,7 @@ class PackageResources(Resource):
             return {"message": "Package name has been used. You must add unique package name"}, 400
 
         add_package = Packages(
+            userPackageID = my_identity,
             itemID = args['itemID'],
             package_name = args['package_name'],
             items_quantity= args['items_quantity']

@@ -30,6 +30,7 @@ class LoginResources(Resource):
             return {'message': 'unauthorized'}, 401
 
         token = create_access_token(identity= qry.id, expires_delta=datetime.timedelta(days=30))
+        token = create_access_token(identity= qry.id, expires_delta= datetime.timedelta(days=30))
 
         return {
             "message": "login success",

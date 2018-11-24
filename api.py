@@ -4,12 +4,13 @@ from configs import manager
 from configs import api
 
 ###### Tempat Untuk Import Resource #########
-# from resourceClient import Client
+
 from resourceUser import UserResources
 from resourceLogin import LoginResources
 from resourceItem import ItemResources
 from resourceCategory import CategoryResources
 from resourcePackages import PackageResources
+
 ############## Finish Style ##################
 
 
@@ -17,8 +18,8 @@ from resourcePackages import PackageResources
 # api.add_resource(Client, '/client/<int:id>' , '/client')
 api.add_resource(UserResources, "/api/users")
 api.add_resource(LoginResources, "/api/users/login")
-api.add_resource(ItemResources, "/api/users/item")
-api.add_resource(CategoryResources, "/api/users/category")
+api.add_resource(ItemResources, "/api/users/item", "/api/users/item/<int:id>")
+api.add_resource(CategoryResources, "/api/users/category","/api/users/category/<int:id>")
 api.add_resource(PackageResources, "/api/users/packages")
 ################# Finished Endpoint ################
 

@@ -2,6 +2,7 @@ from models import db
 
 # Tempat Import Model Database #
 from modelItems import Items
+
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fullname = db.Column(db.String(50), nullable=False)
