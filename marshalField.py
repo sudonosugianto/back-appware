@@ -32,6 +32,7 @@ category_fields = {
     "status":fields.Boolean,
     "created_at": fields.String,
     "updated_at": fields.String
+}
 
 package_fields = {
     "id": fields.Integer,

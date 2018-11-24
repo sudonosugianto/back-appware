@@ -12,8 +12,9 @@ class Users(db.Model):
     status = db.Column(db.Boolean, default=1)
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
-
+    # relationship
     Items = db.relationship('Items', backref='users', lazy=True)
+    packages =  db.relationship('Packages', backref='Users', lazy=True)
 
     def __repr__(self):
         return "<Users %r>" % self.id

@@ -4,10 +4,11 @@ from models import db
 class Packages(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # foreign key field
-    itemID = db.Column(db.Integer, db.ForeignKey("items.id"), nullable=False)
+    itemID = db.Column(db.Integer, db.ForeignKey("items.id", ondelete='CASCADE'), nullable=False)
+    userPackageID = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable = False)
     # field
-    package_name = db.Column(db.String(50), nullable=False)
-    items_quantity = db.Column(db.Integer, nullable=False)
+    package_name = db.Column(db.String(50), nullable=False, unique=True)
+    items_quantity = db.Column(db.Integer, nullable=False, default=0)
     status = db.Column(db.Boolean, default=1)
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())

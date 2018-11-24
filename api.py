@@ -9,6 +9,7 @@ from resourceUser import UserResources
 from resourceLogin import LoginResources
 from resourceItem import ItemResources
 from resourceCategory import CategoryResources
+from resourcePackages import PackageResources
 ############## Finish Style ##################
 
 
@@ -18,6 +19,7 @@ api.add_resource(UserResources, "/api/users")
 api.add_resource(LoginResources, "/api/users/login")
 api.add_resource(ItemResources, "/api/users/item")
 api.add_resource(CategoryResources, "/api/users/category")
+api.add_resource(PackageResources, "/api/users/packages")
 ################# Finished Endpoint ################
 
 if __name__ == '__main__':
