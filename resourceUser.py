@@ -30,7 +30,7 @@ class UserResources(Resource):
         qry2 = Users.query.filter_by(email=args["email"]).first()
 
         if qry1 != None or qry2 != None:
-            return {"message": "username or email has been used"}, 403
+            return {"message": "username or email has been used"}, 400
 
         add_user = Users(
             fullname = args['fullname'],

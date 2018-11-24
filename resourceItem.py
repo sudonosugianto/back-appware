@@ -17,15 +17,15 @@ class ItemResources(Resource):
     @jwt_required
     def get(self,id=None):
         # Filter by ID  
-        userID = get_jwt_identity()
+        my_identity = get_jwt_identity()
         parser = reqparse.RequestParser()
         parser.add_argument("category", type=str, location="args", help="CategoryID must Exist")
         args = parser.parse_args()
-        qry = Items.query.join(Items.catID).filter(Items.userID == userID, Category.category == args['category']).first()
+        qry = Items.query.filter_by(userID = my_identity, catID = args['category']).all()
         
         
         return {"message":"Display Item Success",
-                "item": marshal}
+                "item": marshal(qry, item_fields)}, 200
     
     @jwt_required
     def post(self):
