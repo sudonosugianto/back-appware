@@ -54,7 +54,7 @@ class ItemResources(Resource):
     
     @jwt_required
     def put(self,id=None):
-        userID = get_jwt_identity()
+        # userID = get_jwt_identity()
         
         parser = reqparse.RequestParser()
         parser.add_argument("catID", type=int, location="json", help="CategoryID must Exist")
