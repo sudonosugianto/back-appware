@@ -7,6 +7,10 @@ class Category(db.Model):
     status = db.Column(db.Boolean, default=1)
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
+    
+    # relationship
+    items =  db.relationship('Items', backref='Category', lazy=True)
+    packages =  db.relationship('Packages', backref='Category', lazy=True)
 
     def __repr__(self):
         return "<Category %r>" % self.id

@@ -17,16 +17,11 @@ class ItemResources(Resource):
     @jwt_required
     def get(self,id=None):
         # Filter by ID  
-        userID = get_jwt_identity()
-        qry = Items.query
-        if id == None:
-            qry = qry.filter_by(userID = userID).all()
-        else:
-            qry = qry.filter(Items.id == id, Items.userID == userID).all()
-
-        if marshal(qry, item_fields) == []:
-            return {"message":"Items Not Found"}, 404
-        
+        my_identity = get_jwt_identity()
+        parser = reqparse.RequestParser()
+        parser.add_argument("category", type=str, location="args", help="CategoryID must Exist")
+        args = parser.parse_args()
+        qry = Items.query.filter_by(userID = my_identity, catID = args['category']).all()
         return {"message":"Display Item Success",
                 "item": marshal(qry, item_fields)}, 200
     
