@@ -44,5 +44,5 @@ package_fields = {
     "created_at": fields.String,
     "updated_at": fields.String,
     "Users.fullname": fields.String,
-    "Items.category.category": fields.String
+    "Category.category": fields.String
 }
