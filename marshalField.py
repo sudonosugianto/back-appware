@@ -46,3 +46,17 @@ package_fields = {
     "Users.fullname": fields.String,
     "Items.category.category": fields.String
 }
+
+supplier_fields = {
+    "id": fields.Integer,
+    "userSuppliersID": fields.Integer,
+    "name" : fields.String,
+    "phone_number" : fields.String,
+    "email" : fields.String,
+    "address" : fields.String,
+    "city" : fields.String,
+    "state" : fields.String,
+    "zipcode" : fields.String,
+    "created_at": fields.String,
+    "updated_at": fields.String
+}

@@ -121,6 +121,121 @@
 			"response": []
 		},
 		{
+			"name": "ADD CATEGORY",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"category\":\"snack\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/api/users/category",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EDIT CATEGORY",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"category\":\"snack\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/api/users/category/",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"category",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE CATEGORY",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/api/users/category/",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"category",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "ADD ITEM",
 			"request": {
 				"auth": {
@@ -180,7 +295,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{localhost}}/api/users/item?category=1",
+					"raw": "{{localhost}}/api/users/item",
 					"host": [
 						"{{localhost}}"
 					],
@@ -188,12 +303,6 @@
 						"api",
 						"users",
 						"item"
-					],
-					"query": [
-						{
-							"key": "category",
-							"value": "1"
-						}
 					]
 				}
 			},
@@ -424,6 +533,46 @@
 						"users",
 						"packages",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET CATEGORY",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/api/users/category?",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"category"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "s",
+							"disabled": true
+						}
 					]
 				}
 			},

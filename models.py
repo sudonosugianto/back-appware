@@ -9,4 +9,9 @@ from modelItems import Items
 from modelCat import Category
 from modelPackages import Packages
 
+
+
+from modelSuppliers import Suppliers
+from modelPO import PO
+from modelStocks import Stocks
 ######### Finish Import Model ########

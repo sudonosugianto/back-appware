@@ -11,6 +11,11 @@ from resourceItem import ItemResources
 from resourceCategory import CategoryResources
 from resourcePackages import PackageResources
 
+
+
+
+
+from resourceSuppliers import SupplierResources
 ############## Finish Style ##################
 
 
@@ -21,6 +26,12 @@ api.add_resource(LoginResources, "/api/users/login")
 api.add_resource(ItemResources, "/api/users/item", "/api/users/item/<int:id>")
 api.add_resource(CategoryResources, "/api/users/category","/api/users/category/<int:id>")
 api.add_resource(PackageResources, "/api/users/packages","/api/users/packages/<int:id>")
+
+
+
+
+
+api.add_resource(SupplierResources, "/api/users/suppliers","/api/users/suppliers/<int:id>")
 ################# Finished Endpoint ################
 
 if __name__ == '__main__':
