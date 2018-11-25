@@ -16,6 +16,6 @@ class Users(db.Model):
     # relationship
     Items = db.relationship('Items', backref='users', lazy=True)
     packages =  db.relationship('Packages', backref='Users', lazy=True)
-
+    suppliers = db.relationship('Suppliers',backref='Users', lazy=True)
     def __repr__(self):
         return "<Users %r>" % self.id
