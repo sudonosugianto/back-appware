@@ -5,12 +5,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import MigrateCommand, Migrate
 from flask_script import Manager
 from functools import wraps
+from flask_cors import CORS, cross_origin
 import json
 
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://appware@appware.cqca0rvctn3a.ap-southeast-1.rds.amazonaws.com:3306/appware'
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://appware:password@appware.cqca0rvctn3a.ap-southeast-1.rds.amazonaws.com/appware"
 app.config['JWT_SECRET_KEY'] = 'AppwareSecretKey'
+CORS(app)
 api = Api(app)
 jwt = JWTManager(app)
 

@@ -21,7 +21,14 @@ class ItemResources(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument("category", type=str, location="args", help="CategoryID must Exist")
         args = parser.parse_args()
-        qry = Items.query.filter_by(userID = my_identity, catID = args['category']).all()
+        # Untuk get all tanpa kategori
+        if args['category'] is None:
+            qry = Items.query.filter_by(userID = my_identity).all()
+        else:
+            qry = Items.query.filter_by(userID = my_identity, catID = args['category']).all()
+
+
+
         return {"message":"Display Item Success",
                 "item": marshal(qry, item_fields)}, 200
     
