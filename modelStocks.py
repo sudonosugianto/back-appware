@@ -8,9 +8,9 @@ class Stocks(db.Model):
     userStocksID = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'), nullable=False)
     # field
     beginning = db.Column(db.Integer, default=0)
-    PO = db.Column(db.Integer, default=0)
     sale = db.Column(db.Integer, default=0)
     adjustment = db.Column(db.Integer, default=0)
+    purchaseOrder = db.Column(db.Integer, default=0)
     # ending = db.Column(db.Integer, default=0)
     status = db.Column(db.Boolean, default=1)
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
