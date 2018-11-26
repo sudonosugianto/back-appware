@@ -18,6 +18,7 @@ from resourcePackages import PackageResources
 from resourceSuppliers import SupplierResources
 from resourcePO import POResources
 from resourceStocks import StockResources
+from resourcePOdetails import PODetailResources
 ############## Finish Style ##################
 
 
@@ -35,6 +36,7 @@ api.add_resource(PackageResources, "/api/users/packages","/api/users/packages/<i
 
 api.add_resource(SupplierResources, "/api/users/suppliers","/api/users/suppliers/<int:id>")
 api.add_resource(POResources, "/api/users/po","/api/users/po/<int:id>")
+api.add_resource(PODetailResources, "/api/users/podetails","/api/users/podetails/<int:id>")
 api.add_resource(StockResources, "/api/users/stock","/api/users/stock/<int:id>")
 
 ################# Finished Endpoint ################

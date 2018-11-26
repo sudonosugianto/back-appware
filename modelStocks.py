@@ -14,4 +14,4 @@ class Stocks(db.Model):
     # backref
     PO = db.relationship('PO', backref='stocks', lazy=True)
     def __repr__(self):
-        return "<PO %r>" % self.id
+        return "<Stocks %r>" % self.id

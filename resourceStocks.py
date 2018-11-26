@@ -9,7 +9,7 @@ from modelPackages import Packages
 ####### Finish import Model#########
 
 ####### Tempat import Field#########
-from marshalField import package_fields
+from marshalField import stock_fields
 ####### Finish import Field#########
 
 class StockResources(Resource):
@@ -45,7 +45,7 @@ class StockResources(Resource):
             "message": "Add Initiate Stock Success",
             "package": marshal(qrypackages,{'id':fields.Integer,\
                                             'package_name':fields.String}),
-            "stock": marshal(qry, package_fields)
+            "stock": marshal(qry, stock_fields)
         } ,200
 
     @jwt_required

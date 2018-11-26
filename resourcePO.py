@@ -5,6 +5,9 @@ from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, 
 from models import db
 ####### Tempat import Model#########
 from modelPO import PO
+from modelSuppliers import Suppliers
+from modelStocks import Stocks
+from modelPackages import Packages
 ####### Finish import Model#########
 
 ####### Tempat import Model#########
@@ -15,83 +18,46 @@ class POResources(Resource):
     # Untuk Create Item
     @jwt_required
     def post(self):
-        userID = get_jwt_identity()
+        my_identity = get_jwt_identity()
+        
+        qrysupplier = Suppliers.query.filter_by(userSuppliersID = my_identity).all()
+        # Script get the SupplierID per User
+        # Output File tmp_suppliers nantinya [1,3, ..etc]
+        tmp_suppliers = []
+        for item in qrysupplier:
+            tmp_suppliers.append(item.id)
+
+        qrystocks = Stocks.query.join(Packages, Stocks.packagesID == Packages.id)\
+                                .filter(Packages.userPackageID == my_identity ).all()
+        
+        # Script get the StockID per User via UserPackageID
+        # Output File tmp_suppliers nantinya [1,3, ..etc]
+        tmp_stocks = []
+        for item in qrystocks:
+            tmp_stocks.append(item.id)
+        
         parser = reqparse.RequestParser()
-        parser.add_argument("category", type=str, location="json", help="Category must Exist")
+        # Package ID diberikan choices hanya ID yang dimiliki user
+        parser.add_argument('supplierID', type = int, help='You\'re pick a wrong choice of Supplier ID', location='json', choices=tmp_suppliers)
+        parser.add_argument('stockID', type = int, help='You\'re pick a wrong choice of Stock ID', location='json',choices=tmp_stocks)
+        parser.add_argument('notes', type = str, help='Write Note for Remind you something.', location='json')
         args = parser.parse_args()
-        
-        qry = Category.query.filter_by(category=args['category']).all()
-        
-        if qry is not None :
-            return {"message":"Category is exist. You must add unique category",
-                    "category":marshal(qry,category_fields)}, 400
-        
-        add_category = Category(
-            userID = userID,
-            category = args['category']
+
+        add_po = PO(
+            supplierID = args['supplierID'],
+            stockID = args['stockID'],
+            notes = args['notes']
         )
-        db.session.add(add_category)
-        db.session.commit() 
-        return {
-            "message": "add Category success",
-            "category": marshal(add_category, category_fields)
-        }, 200
-    
-    @jwt_required
-    def put(self, id=None):
-        userID = get_jwt_identity()
         
-        parser = reqparse.RequestParser()
-        parser.add_argument("category", type=str, location="json", help="CategoryID must Exist")
-        args = parser.parse_args()
-
-        qry = Category.query.filter_by(id=id).first()
-        if args['category'] != None:
-            qry.category = args['category']
-
-        qry.updated_at = db.func.current_timestamp()
-
-        db.session.add(qry)
-        db.session.commit() 
-        return {
-            "message": "Edit Category success",
-            "item": marshal(qry, category_fields)
-        }, 200
-
-    @jwt_required
-    def delete(self,id=None):
-        qry = Category.query.get(ident=id)
-
-        if qry == None :
-            return {"message":"Category Not Found"}, 404
-
-        db.session.delete(qry)
+        qry = PO.query.filter_by(supplierID=args['supplierID'],stockID=args['stockID']).first()
+        
+        db.session.add(add_po)
         db.session.commit()
 
-        return {"message":"Delete Category Successfull"}, 200
-
-    @jwt_required
-    def get(self):
-        userID = get_jwt_identity()
-
-        parser = reqparse.RequestParser()
-        parser.add_argument("search", type=str, location="args", help="search must Exist")
-        args = parser.parse_args()
-
-        if args['search'] is not None:
-            search = args['search']
-            # Fungsi untuk search, digunakan filter daripada filter_by 
-			# karena butuh method like dengan regex %
-            qry = Category.query.filter_by(userID=userID)\
-                                .filter(Category.category.like('%'+search+'%')).all()
-            if qry is None:
-                return{"message":"Search not Found"}, 404
-            return {"message":"Search Result",
-                    "category":marshal(qry,category_fields)}, 200
-            
-        else:
-            # Query untuk mendapatkan semua kategori
-            qry = Category.query.filter_by(userID=userID).all()
-
-            return {"message":"All Category from user",
-                    "category":marshal(qry,category_fields)}, 200
+        return {
+            "message": "Add Initiate Stock Success",
+            "supplier": marshal(qrysupplier,{'id':fields.Integer,\
+                                            'name':fields.String}),
+            "stock": marshal(qrystocks,{'id':fields.Integer}),
+            "PO": marshal(qry, po_fields)
+        } ,200
