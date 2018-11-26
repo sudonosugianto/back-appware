@@ -47,7 +47,6 @@ class StockResources(Resource):
                                             'package_name':fields.String}),
             "stock": marshal(qry, stock_fields)
         } ,200
-
     @jwt_required
     def put(self,id=None):
         my_identity = get_jwt_identity()
