@@ -17,21 +17,22 @@ class StockResources(Resource):
     @jwt_required
     def post(self):
         my_identity = get_jwt_identity()
-        qrypackages = Packages.query.filter_by(userPackageID = my_identity).all()
+        # qrypackages = Packages.query.filter_by(userPackageID = my_identity).all()
 
         # Script get the PackageID per User
         # Output File tmp nantinya [1,3, ..etc]
-        tmp = []
-        for item in qrypackages:
-            tmp.append(item.id)
+        # tmp = []
+        # for item in qrypackages:
+        #     tmp.append(item.id)
 
         parser = reqparse.RequestParser()
         # Package ID diberikan choices hanya ID yang dimiliki user
-        parser.add_argument('packagesID', type = int, help='You\'re pick a wrong choice', location='json', choices=tmp)
+        parser.add_argument('packagesID', type = int, help='You\'re pick a wrong choice', location='json')
         parser.add_argument('beginning', type = int, help='beginning must be int type', location='json')
         args = parser.parse_args()
 
         add_stocks = Stocks(
+            userStocksID= my_identity,
             packagesID = args['packagesID'],
             beginning = args['beginning']
         )
@@ -43,41 +44,78 @@ class StockResources(Resource):
 
         return {
             "message": "Add Initiate Stock Success",
-            "package": marshal(qrypackages,{'id':fields.Integer,\
-                                            'package_name':fields.String}),
+            # "package": marshal(qryp,{'id':fields.Integer,\
+            #                                 'package_name':fields.String}),
             "stock": marshal(qry, stock_fields)
         } ,200
 
     @jwt_required
     def put(self,id=None):
         my_identity = get_jwt_identity()
-        qrypackages = Packages.query.filter_by(userPackageID = my_identity).all()
 
-        # Script get the PackageID per User
-        # Output File tmp nantinya [1,3, ..etc]
-        tmp = []
-        for item in qrypackages:
-            tmp.append(item.id)
+        qry = Stocks.query.filter_by(userStocksID = my_identity).first()
+        
+        if qry == None :
+            return {'message': 'stock not found'}, 404
 
         parser = reqparse.RequestParser()
         # Package ID diberikan choices hanya ID yang dimiliki user
-        parser.add_argument('packagesID', type = int, help='You\'re pick a wrong choice', location='json', choices=tmp)
-        parser.add_argument('beginning', type = int, help='beginning must be int type', location='json')
+        parser.add_argument('packagesID', type = int, help='You\'re pick a wrong choice', location='json')
+        parser.add_argument('PO', type = int, help='PO must be int type', location='json')
+        parser.add_argument('sale', type = int, help='sale must be int type', location='json')
+        parser.add_argument('adjustment', type = int, help='adjustment must be int type', location='json')
+
         args = parser.parse_args()
 
         qry = Stocks.query.filter_by(id=id).first()
         if args['packagesID'] is not None:
             qry.packagesID = args['packagesID']
-        if args['beginning'] is not None:
-            qry.beginning = args['beginning']
+        if args['PO'] is not None:
+            qry.PO = args['PO']
+        if args['sale'] is not None:
+            qry.sale = args['sale']
+        if args['adjustment'] is not None:
+            qry.adjustment = args['adjustment']
         
         qry.updated_at = db.func.current_timestamp()
+
         db.session.add(qry)
         db.session.commit()
 
         return {
-            "message": "Update Initiate Stock Success",
-            "package": marshal(qrypackages,{'id':fields.Integer,\
-                                            'package_name':fields.String}),
-            "stock": marshal(qry, package_fields)
+            "message": "Update Stock Success",
+            "stock": marshal(qry, stock_fields)
         } ,200
+
+     # Untuk menampilkan stocks
+    @jwt_required
+    def get(self, id=None):
+
+        my_identity = get_jwt_identity()
+
+        qry = Stocks.query
+
+        #   get by id
+
+        if id != None:
+           qry = Stocks.query.get(ident=id)
+
+           return {"message":"Your Detail Item by ID",
+                   "stocks":marshal(qry,stock_fields)}, 200
+
+        # get all
+
+        qry = qry.filter_by(userStocksID = my_identity).all()
+
+        rows = []
+
+        for row in qry.all():
+            row.append(marshal(rows, stock_fields))
+
+        if rows == []:
+            return {'message': 'stock not found'}, 404
+
+        return {
+            "message": "success",
+            "stocks": marshal(qry, stock_fields)
+        }, 200
