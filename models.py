@@ -15,5 +15,6 @@ from modelAdjustments import Adjustments
 
 from modelSuppliers import Suppliers
 from modelPO import PO
+from modelPODetails import PODetails
 from modelStocks import Stocks
 ######### Finish Import Model ########

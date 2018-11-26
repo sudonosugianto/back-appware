@@ -5,7 +5,7 @@ from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, 
 from models import db
 ####### Tempat import Model#########
 from modelPO import PO
-from modelPO import POdetails
+from modelPODetails import PODetails
 from modelSuppliers import Suppliers
 from modelStocks import Stocks
 from modelPackages import Packages
@@ -64,7 +64,7 @@ class PODetailResources(Resource):
         # 'Table' object is not callable
        
         
-        PO.POdetails.append(Packages)
+        # PO.POdetails.append(Packages)
         db.session.commit()
 
         return {
