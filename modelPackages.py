@@ -16,5 +16,6 @@ class Packages(db.Model):
 
     # Backref
     Stocks = db.relationship('Stocks', backref='packages', lazy=True)
+    POdetails = db.relationship('POdetails', backref='packages', lazy=True)
     def __repr__(self):
         return "<Packages %r>" % self.id

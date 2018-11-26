@@ -13,5 +13,6 @@ from modelPackages import Packages
 
 from modelSuppliers import Suppliers
 from modelPO import PO
+from modelPOdetails import PODetails
 from modelStocks import Stocks
 ######### Finish Import Model ########

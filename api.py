@@ -18,7 +18,7 @@ from resourcePackages import PackageResources
 from resourceSuppliers import SupplierResources
 from resourcePO import POResources
 from resourceStocks import StockResources
-from resourcePOdetails import PODetailResources
+from resourcePODetails import PODetailResources
 ############## Finish Style ##################
 
 
