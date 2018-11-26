@@ -6,7 +6,6 @@ from models import db
 ####### Tempat import Model#########
 from modelPO import PO
 from modelSuppliers import Suppliers
-from modelStocks import Stocks
 from modelPackages import Packages
 ####### Finish import Model#########
 
@@ -27,19 +26,11 @@ class POResources(Resource):
         for item in qrysupplier:
             tmp_suppliers.append(item.id)
 
-        qrystocks = Stocks.query.join(Packages, Stocks.packagesID == Packages.id)\
-                                .filter(Packages.userPackageID == my_identity ).all()
-        
-        # Script get the StockID per User via UserPackageID
-        # Output File tmp_suppliers nantinya [1,3, ..etc]
-        tmp_stocks = []
-        for item in qrystocks:
-            tmp_stocks.append(item.id)
         
         parser = reqparse.RequestParser()
         # Package ID diberikan choices hanya ID yang dimiliki user
         parser.add_argument('supplierID', type = int, help='You\'re pick a wrong choice of Supplier ID', location='json', choices=tmp_suppliers)
-        parser.add_argument('stockID', type = int, help='You\'re pick a wrong choice of Stock ID', location='json',choices=tmp_stocks)
+        
         parser.add_argument('notes', type = str, help='Write Note for Remind you something.', location='json')
         args = parser.parse_args()
 
@@ -58,6 +49,5 @@ class POResources(Resource):
             "message": "Add Initiate Stock Success",
             "supplier": marshal(qrysupplier,{'id':fields.Integer,\
                                             'name':fields.String}),
-            "stock": marshal(qrystocks,{'id':fields.Integer}),
             "PO": marshal(qry, po_fields)
         } ,200

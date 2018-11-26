@@ -13,11 +13,8 @@ from resourcePackages import PackageResources
 from resourceSuppliers import SupplierResources
 from resourceCustomers import CustomerResources
 from resourceSales import SaleResources
-from resourceAdjustments import AdjustmentResources
-
 from resourcePO import POResources
-from resourceStocks import StockResources
-from resourcePODetails import PODetailResources
+
 ############## Finish Style ##################
 
 
@@ -30,10 +27,8 @@ api.add_resource(PackageResources, "/api/users/packages","/api/users/packages/<i
 api.add_resource(SupplierResources, "/api/users/suppliers","/api/users/suppliers/<int:id>")
 api.add_resource(CustomerResources, "/api/users/customers","/api/users/customers/<int:id>")
 api.add_resource(POResources, "/api/users/po","/api/users/po/<int:id>")
-api.add_resource(PODetailResources, "/api/users/podetails","/api/users/podetails/<int:id>")
-api.add_resource(StockResources, "/api/users/stock","/api/users/stock/<int:id>")
 api.add_resource(SaleResources, "/api/users/sales","/api/users/sales/<int:id>")
-api.add_resource(AdjustmentResources, "/api/users/adjustments","/api/users/adjustments/<int:id>")
+# api.add_resource()
 
 ################# Finished Endpoint ################
 
