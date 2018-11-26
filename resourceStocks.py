@@ -48,18 +48,19 @@ class StockResources(Resource):
             #                                 'package_name':fields.String}),
             "stock": marshal(qry, stock_fields)
         } ,200
+
     @jwt_required
-    def put(self,id=None):
+    def put(self,id):
         my_identity = get_jwt_identity()
 
-        qry = Stocks.query.filter_by(userStocksID = my_identity).first()
+        qry = Stocks.query.filter_by(userStocksID = my_identity)
         
         if qry == None :
             return {'message': 'stock not found'}, 404
 
         parser = reqparse.RequestParser()
         # Package ID diberikan choices hanya ID yang dimiliki user
-        parser.add_argument('packagesID', type = int, help='You\'re pick a wrong choice', location='json')
+        parser.add_argument('packagesID', type = int, help='packagesID must be integer and exist', location='json')
         parser.add_argument('purchaseOrder', type = int, help='purchaseOrder must be int type', location='json')
         parser.add_argument('sale', type = int, help='sale must be int type', location='json')
         parser.add_argument('adjustment', type = int, help='adjustment must be int type', location='json')
@@ -81,9 +82,14 @@ class StockResources(Resource):
         db.session.add(qry)
         db.session.commit()
 
+        # Perhitungan Ending
+        theory = qry.beginning + qry.purchaseOrder - qry.sale
+        actualStock = qry.adjustment
+        ending = theory - actualStock
         return {
             "message": "Update Stock Success",
-            "stock": marshal(qry, stock_fields)
+            "stock": marshal(qry, stock_fields),
+            "ending": ending
         } ,200
 
      # Untuk menampilkan stocks
