@@ -71,7 +71,16 @@ customer_fields = {
     "city": fields.String,
     "state": fields.String,
     "zipcode": fields.String,
-    "status": fields.Boolean,
+    "status": fields.Boolean
+}
+
+po_fields = {
+    "id": fields.Integer,
+    "supplierID": fields.Integer,
+    "stockID": fields.Integer,
+    "total_price": fields.Float,
+    "status":fields.Boolean,
+    "notes" : fields.String,
     "created_at": fields.String,
     "updated_at": fields.String
 }
@@ -86,4 +95,24 @@ sale_fields = {
     "status": fields.Boolean,
     "created_at": fields.String,
     "updated_at": fields.String
+}
+
+stock_fields = {
+    "id": fields.Integer,
+    "packagesID": fields.Integer,
+    "beginning": fields.Integer,
+    "status":fields.Boolean,
+    "created_at": fields.String,
+    "updated_at": fields.String
+}
+
+podetail_fields = {
+    "id": fields.Integer,
+    "POID": fields.Integer,
+    "packageID": fields.Integer,
+    "packagename":fields.String,
+    "inStock":fields.Integer,
+    "order":fields.Integer,
+    "unitCost":fields.Float,
+    "subTotal":fields.Float
 }

@@ -120,7 +120,7 @@ class PackageResources(Resource):
 
         # get all
 
-        qry = qry.query.filter_by(userPackageID = my_identity)
+        qry = qry.filter_by(userPackageID = my_identity)
 
         rows = []
 

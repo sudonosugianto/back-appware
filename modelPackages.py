@@ -14,5 +14,7 @@ class Packages(db.Model):
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
 
+    # Backref
+    Stocks = db.relationship('Stocks', backref='packages', lazy=True)
     def __repr__(self):
         return "<Packages %r>" % self.id

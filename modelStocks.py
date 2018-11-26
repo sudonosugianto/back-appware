@@ -4,7 +4,7 @@ from models import db
 class Stocks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # foreign key field
-    packagesID = db.Column(db.Integer, db.ForeignKey("packagess.id", ondelete='CASCADE'), nullable=False)
+    packagesID = db.Column(db.Integer, db.ForeignKey("packages.id", ondelete='CASCADE'), nullable=False)
     # field
     beginning = db.Column(db.Integer, nullable=False, default=0)
     status = db.Column(db.Boolean, default=1)
@@ -13,5 +13,7 @@ class Stocks(db.Model):
     # relationship
     sales = db.relationship("Sales", backref="Stocks", lazy=True)
 
+    # backref
+    PO = db.relationship('PO', backref='stocks', lazy=True)
     def __repr__(self):
-        return "<PO %r>" % self.id
+        return "<Stocks %r>" % self.id
