@@ -1,6 +1,6 @@
 from flask_restful import Resource, Api, reqparse, marshal, fields
 from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, jwt_required, get_jwt_claims, verify_jwt_in_request
-
+from sqlalchemy import or_
 
 from models import db
 ####### Tempat import Model#########
@@ -13,28 +13,51 @@ from marshalField import item_fields
 ####### Finish import Model#########
 
 class ItemResources(Resource):
-    # Untuk Create Item
+    # Untuk Menampilkan Item
     @jwt_required
     def get(self,id=None):
-        # Filter by ID  
+
         my_identity = get_jwt_identity()
-        parser = reqparse.RequestParser()
-        parser.add_argument("category", type=str, location="args", help="CategoryID must Exist")
-        args = parser.parse_args()
+
+        qry = Items.query.filter_by(userID=my_identity)
         
+        parser = reqparse.RequestParser()
+        parser.add_argument("catID", type=int, location="args", help="catID must be integer")
+        parser.add_argument("search", type=str, location="args", help="search must be string")
+        args = parser.parse_args()
+
         if id is None :
-            # Untuk get all tanpa kategori
-            if args['category'] is None:
-                qry = Items.query.filter_by(userID = my_identity).all()
-            else:
-                qry = Items.query.join(Category, Items.catID == Category.id)\
-                                .filter(Category.category == args['category'])\
-                                .filter(Items.userID == my_identity).all()
+            # by Category
+            if args['catID'] is not None:
+                qry = qry.filter_by(catID = args['catID'])
+
+            # by item or category
+            if args['search'] is not None:
+                search = args["search"]
+                qry = qry.filter(or_(Category.category.like('%'+search+'%'), Items.item.like('%'+search+'%')))
+
+        #     # Untuk get all tanpa kategori
+        #     if args['category'] is None:
+        #         qry = Items.query.filter_by(userID = my_identity).all()
+        #     else:
+        #         qry = Items.query.join(Category, Items.catID == Category.id)\
+        #                         .filter(Category.category == args['category'])\
+        #                         .filter(Items.userID == my_identity).all()
+
         else:
-            qry = Items.query.get(ident=id)
+            qry = qry.filter_by(id=id)
+
+        rows = []
+
+        for row in qry.all():
+            rows.append(marshal(row, item_fields))
+
+        if rows == []:
+            return {'message': 'items not found'}, 404
+
         return {"message":"Display Item Success",
-                "item": marshal(qry, item_fields)}, 200
-    
+                "item": rows}, 200
+
     @jwt_required
     def post(self):
         userID = get_jwt_identity()

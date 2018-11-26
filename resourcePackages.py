@@ -1,10 +1,12 @@
 from flask_restful import Resource, Api, reqparse, marshal, fields
 from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, jwt_required, get_jwt_claims, verify_jwt_in_request
 import datetime
+from sqlalchemy import or_
 
 from models import db
 ####### Tempat import Model#########
 from modelPackages import Packages
+from modelItems import Items
 ####### Finish import Model#########
 
 
@@ -115,7 +117,15 @@ class PackageResources(Resource):
 
         # get all
 
+        parser=reqparse.RequestParser()
+        parser.add_argument('search',type=str,location='args')
+        args=parser.parse_args()
+
         qry = qry.filter_by(userPackageID = my_identity)
+
+        if args['search'] is not None:
+                search = args["search"]
+                qry = qry.filter(or_(Packages.package_name.like('%'+search+'%'), Items.item.like('%'+search+'%')))
 
         rows = []
 
