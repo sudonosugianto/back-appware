@@ -5,7 +5,7 @@ from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, 
 from models import db
 ####### Tempat import Model#########
 from modelPO import PO
-from modelPOdetails import PODetails
+from modelPODetails import PODetails
 from modelSuppliers import Suppliers
 from modelStocks import Stocks
 from modelPackages import Packages

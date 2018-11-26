@@ -16,6 +16,6 @@ from modelSales import Sales
 
 from modelSuppliers import Suppliers
 from modelPO import PO
-from modelPOdetails import PODetails
+from modelPODetails import PODetails
 from modelStocks import Stocks
 ######### Finish Import Model ########

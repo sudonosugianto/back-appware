@@ -8,8 +8,11 @@ class PODetails(db.Model):
     packageID = db.Column(db.Integer, db.ForeignKey('packages.id', ondelete='CASCADE'), nullable = False)
     
     #Field
-    total = db.Column(db.Float, default=0)
-    notes = db.Column(db.String(255))
+    packageName = db.Column(db.String(255))
+    inStock = db.Column(db.Integer, default = 0)
+    order = db.Column(db.Integer,default = 0)
+    unitCost = db.Column(db.Float, default=0)
+    subTotal = db.Column(db.Float, default=0)
     status = db.Column(db.Boolean, default=1)
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
