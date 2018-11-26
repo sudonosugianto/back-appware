@@ -10,8 +10,7 @@ from modelCat import Category
 from modelPackages import Packages
 from modelCustomers import Customers
 from modelSales import Sales
-
-
+from modelAdjustments import Adjustments
 
 
 from modelSuppliers import Suppliers

@@ -12,6 +12,7 @@ class Stocks(db.Model):
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     # relationship
     sales = db.relationship("Sales", backref="Stocks", lazy=True)
+    adjustments = db.relationship("Adjustments", backref="Stocks", lazy=True)
 
     # backref
     PO = db.relationship('PO', backref='stocks', lazy=True)

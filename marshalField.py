@@ -15,6 +15,7 @@ item_fields = {
     "id":fields.Integer,
     "userID":fields.Integer,
     "catID": fields.Integer,
+    "Category.category": fields.String,
     "item":fields.String,
     "picture":fields.String,
     "size":fields.Integer,
@@ -115,4 +116,15 @@ podetail_fields = {
     "order":fields.Integer,
     "unitCost":fields.Float,
     "subTotal":fields.Float
+}
+
+adjustment_fields = {
+    "id": fields.Integer,
+    "userAdjustmentsID": fields.Integer,
+    "stockAdjustmentsID": fields.Integer,
+    "actualStocks": fields.Integer,
+    "notes": fields.String,
+    "status": fields.Boolean,
+    "created_at": fields.String,
+    "updated_at": fields.String
 }

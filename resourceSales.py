@@ -51,10 +51,10 @@ class SaleResources(Resource):
     @jwt_required
     def put(self, id):
         parser = reqparse.RequestParser()
-        parser.add_argument("customerSalesID", type=int, location="json", help="customerSalesID must be integer and exist")
-        parser.add_argument("stockSalesID", type=int, location="json", help="stockSalesID must be integer and exist")
-        parser.add_argument("quantity", type=int, location="json", help="quantity must be integer and exist")
-        parser.add_argument("sellingPrice", type=float, location="json", help="sellingPrice must be float and exist")
+        parser.add_argument("customerSalesID", type=int, location="json", help="customerSalesID must be integer")
+        parser.add_argument("stockSalesID", type=int, location="json", help="stockSalesID must be integer")
+        parser.add_argument("quantity", type=int, location="json", help="quantity must be integer")
+        parser.add_argument("sellingPrice", type=float, location="json", help="sellingPrice must be float")
 
         args = parser.parse_args()
 
@@ -127,8 +127,6 @@ class SaleResources(Resource):
             }, 200
 
         # get all
-
-        qry = Sales.query.filter_by(id = my_identity)
 
         rows = []
 
