@@ -20,12 +20,6 @@ class CategoryResources(Resource):
         parser.add_argument("category", type=str, location="json", help="Category must Exist")
         args = parser.parse_args()
         
-        qry = Category.query.filter_by(category=args['category']).all()
-        
-        if qry is not None :
-            return {"message":"Category is exist. You must add unique category",
-                    "category":marshal(qry,category_fields)}, 400
-        
         add_category = Category(
             userID = userID,
             category = args['category']
