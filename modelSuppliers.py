@@ -1,6 +1,5 @@
 from models import db
 
-
 class Suppliers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # foreign key field
@@ -16,5 +15,6 @@ class Suppliers(db.Model):
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
 
+    PO = db.relationship('PO', backref='suppliers', lazy=True)
     def __repr__(self):
         return "<Packages %r>" % self.id
