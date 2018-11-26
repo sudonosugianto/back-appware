@@ -25,11 +25,6 @@ class PackageResources(Resource):
         args = parser.parse_args()
         my_identity = get_jwt_identity()
 
-        qry = Packages.query.filter_by(package_name=args["package_name"]).first()
-
-        if qry != None:
-            return {"message": "Package name has been used. You must add unique package name"}, 400
-
         add_package = Packages(
             userPackageID = my_identity,
             itemID = args['itemID'],
