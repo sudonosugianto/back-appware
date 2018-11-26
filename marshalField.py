@@ -40,12 +40,13 @@ package_fields = {
     "itemID": fields.Integer,
     "package_name": fields.String,
     "Items.item": fields.String,
+    "Items.Category.category": fields.String,
     "items_quantity": fields.Integer,
     "status": fields.Boolean,
     "created_at": fields.String,
     "updated_at": fields.String,
     "Users.fullname": fields.String,
-    "Category.category": fields.String
+    "Category.category": fields.String,
 }
 
 supplier_fields = {
