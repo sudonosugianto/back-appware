@@ -161,6 +161,46 @@
 			"response": []
 		},
 		{
+			"name": "GET CATEGORY",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/api/users/category?",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"category"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "s",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "EDIT CATEGORY",
 			"request": {
 				"auth": {
@@ -539,7 +579,47 @@
 			"response": []
 		},
 		{
-			"name": "GET CATEGORY",
+			"name": "ADD SUPPLIERS",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"UD Barokah Jaya\",\n    \"phone_number\" : \"0812355679891\",\n    \"email\" : \"toko@barokah.store\",\n    \"address\" : \"Talok\",\n    \"city\" : \"Malang\",\n    \"state\" : \"Jawa Timur\",\n    \"zipcode\" : \"60182\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/api/users/suppliers",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"suppliers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET SUPPLIERS",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -558,21 +638,215 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{localhost}}/api/users/category?",
+					"raw": "{{localhost}}/api/users/suppliers?search=barokah",
 					"host": [
 						"{{localhost}}"
 					],
 					"path": [
 						"api",
 						"users",
-						"category"
+						"suppliers"
 					],
 					"query": [
 						{
 							"key": "search",
-							"value": "s",
-							"disabled": true
+							"value": "barokah"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EDIT SUPPLIERS",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"UD Sumber Baru II\",\n    \"phone_number\" : \"0812355679890\",\n    \"email\" : \"toko@sumberbaru.store\",\n    \"address\" : \"Talok\",\n    \"city\" : \"Malang\",\n    \"state\" : \"Jawa Timur\",\n    \"zipcode\" : \"60182\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/api/users/suppliers/1",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"suppliers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE SUPPLIERS",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/api/users/packages/",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"packages",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST STOCK BEGINNING",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"packagesID\":\"2\",\n\t\"beginning\":\"10\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/api/users/stock",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"stock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PO WITHOUT TOTAL",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"supplierID\":\"2\",\n\t\"stockID\":\"1\",\n\t\"notes\":\"Catatan Order\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/api/users/po",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"po"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST PO Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"POID\":\"1\",\n\t\"packageID\":\"1\",\n\t\"order\":\"67\",\n\t\"unitCost\":\"2000\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/api/users/podetails",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"podetails"
 					]
 				}
 			},
