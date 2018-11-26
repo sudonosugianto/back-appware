@@ -71,27 +71,28 @@ class CategoryResources(Resource):
         return {"message":"Delete Category Successfull"}, 200
 
     @jwt_required
-    def get(self):
+    def get(self,id=None):
         userID = get_jwt_identity()
 
         parser = reqparse.RequestParser()
         parser.add_argument("search", type=str, location="args", help="search must Exist")
         args = parser.parse_args()
 
-        if args['search'] is not None:
-            search = args['search']
-            # Fungsi untuk search, digunakan filter daripada filter_by 
-			# karena butuh method like dengan regex %
-            qry = Category.query.filter_by(userID=userID)\
-                                .filter(Category.category.like('%'+search+'%')).all()
-            if qry is None:
-                return{"message":"Search not Found"}, 404
-            return {"message":"Search Result",
-                    "category":marshal(qry,category_fields)}, 200
-            
-        else:
-            # Query untuk mendapatkan semua kategori
-            qry = Category.query.filter_by(userID=userID).all()
-
-            return {"message":"All Category from user",
-                    "category":marshal(qry,category_fields)}, 200
+        if id is None :
+            if args['search'] is not None:
+                search = args['search']
+                # Fungsi untuk search, digunakan filter daripada filter_by 
+                # karena butuh method like dengan regex %
+                qry = Category.query.filter_by(userID=userID)\
+                                    .filter(Category.category.like('%'+search+'%')).all()
+                if qry is None:
+                    return{"message":"Search not Found"}, 404
+                return {"message":"Search Result",
+                        "category":marshal(qry,category_fields)}, 200
+            else:
+                # Query untuk mendapatkan semua kategori
+                qry = Category.query.filter_by(userID=userID).all()
+        else :
+            qry = Category.query.get(ident=id)
+        return {"message":"All Category from user",
+                "category":marshal(qry,category_fields)}, 200

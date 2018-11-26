@@ -60,14 +60,22 @@ class PODetailResources(Resource):
         # Perhitungan Sub Total
         subTotal = float(args['order'])*args['unitCost']
 
+        add_po = PODetails(
+            POID = args['POID'],
+            packageID = args['packageID'],
+            packageName = qrypackageName.package_name,
+            inStock = inStock,
+            order = args['order'],
+            unitCost = args['unitCost'],
+            subTotal = subTotal
+        )
         
-        # 'Table' object is not callable
-       
-        
-        # PO.POdetails.append(Packages)
+        db.session.add(add_po)
         db.session.commit()
+
+        qry = PODetails.query.filter_by(POID=args['POID'],packageID=args['packageID']).first()
 
         return {
             "message": "Add PO Details Success",
-            "PODetails": "Test"
+            "PODetails": marshal(qry, podetail_fields)
         } ,200
