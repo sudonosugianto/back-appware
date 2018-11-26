@@ -13,6 +13,7 @@ from resourcePackages import PackageResources
 from resourceSuppliers import SupplierResources
 from resourceCustomers import CustomerResources
 from resourceSales import SaleResources
+from resourceAdjustments import AdjustmentResources
 
 from resourcePO import POResources
 from resourceStocks import StockResources
@@ -32,6 +33,7 @@ api.add_resource(POResources, "/api/users/po","/api/users/po/<int:id>")
 api.add_resource(PODetailResources, "/api/users/podetails","/api/users/podetails/<int:id>")
 api.add_resource(StockResources, "/api/users/stock","/api/users/stock/<int:id>")
 api.add_resource(SaleResources, "/api/users/sales","/api/users/sales/<int:id>")
+api.add_resource(AdjustmentResources, "/api/users/adjustments","/api/users/adjustments/<int:id>")
 
 ################# Finished Endpoint ################
 
