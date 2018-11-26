@@ -149,7 +149,7 @@ class CustomerResources(Resource):
 
         # get all
 
-        qry = Customers.query.filter_by(id = my_identity)
+        qry = Customers.query.filter_by(userCustomerID = my_identity)
 
         rows = []
 
