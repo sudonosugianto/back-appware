@@ -54,7 +54,7 @@ class UserResources(Resource):
 
     # untuk edit profil user
     @jwt_required
-    def put(self):
+    def put(self, id):
         parser = reqparse.RequestParser()
         parser.add_argument('fullname', type = str, help='fullname must be string type', location='json')
         parser.add_argument('username', type = str, help='username must be string type', location='json')
@@ -71,6 +71,12 @@ class UserResources(Resource):
         if qry == None :
             return {'message': 'user not found'}, 404
 
+        qry1 = Users.query.filter_by(username = args["username"]).first()
+        qry2 = Users.query.filter_by(email = args["email"]).first()        
+
+        if qry1 != None or qry2 != None:
+            return {"message": "username or email has been used"}, 400
+            
         else:
             if args["fullname"] != None:
                 qry.fullname= args["fullname"]
@@ -93,7 +99,7 @@ class UserResources(Resource):
             } ,200
 
     @jwt_required
-    def delete(self):
+    def delete(self, id):
         my_identity = get_jwt_identity()
         
         qry = Users.query.filter_by(id = my_identity).first()
@@ -107,7 +113,7 @@ class UserResources(Resource):
         return {'message': "delete user success"}, 200
 
     @jwt_required
-    def get(self):
+    def get(self, id):
 
         my_identity = get_jwt_identity()
 

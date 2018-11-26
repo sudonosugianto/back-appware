@@ -109,8 +109,29 @@ class SupplierResources(Resource):
 
     # Untuk menampilkan supplier
     @jwt_required
-    def get(self):
+    def get(self, id=None):
         my_identity = get_jwt_identity()
+
+        qry = Suppliers.query
+
+        #   get by id
+
+        if id != None:
+            qry = qry.filter_by(userSuppliersID = my_identity).filter_by(id = id)
+
+            rows = []
+
+            for row in qry.all():
+                rows.append(marshal(row, supplier_fields))
+
+            if rows == []:
+                return {'message': 'supplier not found'}, 404
+
+            return {
+                "message": "success",
+                "package": rows
+            }, 200
+            
         parser = reqparse.RequestParser()
         parser.add_argument("search", type=str, location="args", help="Search must be string")
         args = parser.parse_args()
