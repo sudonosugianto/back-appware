@@ -10,17 +10,21 @@ from resourceLogin import LoginResources
 from resourceItem import ItemResources
 from resourceCategory import CategoryResources
 from resourcePackages import PackageResources
+from resourceSuppliers import SupplierResources
+from resourceCustomers import CustomerResources
+from resourceSales import SaleResources
 
 ############## Finish Style ##################
 
 
 ######### Tempat untuk Membuat Endpoint ################
-# api.add_resource(Client, '/client/<int:id>' , '/client')
 api.add_resource(UserResources, "/api/users")
 api.add_resource(LoginResources, "/api/users/login")
 api.add_resource(ItemResources, "/api/users/item", "/api/users/item/<int:id>")
 api.add_resource(CategoryResources, "/api/users/category","/api/users/category/<int:id>")
-api.add_resource(PackageResources, "/api/users/packages")
+api.add_resource(PackageResources, "/api/users/packages","/api/users/packages/<int:id>")
+api.add_resource(SupplierResources, "/api/users/suppliers","/api/users/suppliers/<int:id>")
+api.add_resource(CustomerResources, "/api/users/customers","/api/users/customers/<int:id>")
 ################# Finished Endpoint ################
 
 if __name__ == '__main__':

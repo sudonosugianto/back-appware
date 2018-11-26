@@ -8,5 +8,13 @@ from modelUsers import Users
 from modelItems import Items
 from modelCat import Category
 from modelPackages import Packages
+from modelCustomers import Customers
+from modelSales import Sales
 
+
+
+
+from modelSuppliers import Suppliers
+from modelPO import PO
+from modelStocks import Stocks
 ######### Finish Import Model ########

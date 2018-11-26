@@ -46,3 +46,44 @@ package_fields = {
     "Users.fullname": fields.String,
     "Category.category": fields.String
 }
+
+supplier_fields = {
+    "id": fields.Integer,
+    "userSuppliersID": fields.Integer,
+    "name" : fields.String,
+    "phone_number" : fields.String,
+    "email" : fields.String,
+    "address" : fields.String,
+    "city" : fields.String,
+    "state" : fields.String,
+    "zipcode" : fields.String,
+    "created_at": fields.String,
+    "updated_at": fields.String
+}
+
+customer_fields = {
+    "id": fields.Integer,
+    "userCustomerID": fields.Integer,
+    "fullname": fields.String,
+    "phoneNumber": fields.String,
+    "email": fields.String,
+    "address": fields.String,
+    "city": fields.String,
+    "state": fields.String,
+    "zipcode": fields.String,
+    "status": fields.Boolean,
+    "created_at": fields.String,
+    "updated_at": fields.String
+}
+
+sale_fields = {
+    "id": fields.Integer,
+    "userSalesID": fields.Integer,
+    "customerSalesID": fields.Integer,
+    "stockSalesID": fields.Integer,
+    "quantity": fields.Integer,
+    "sellingPrice": fields.Float,
+    "status": fields.Boolean,
+    "created_at": fields.String,
+    "updated_at": fields.String
+}

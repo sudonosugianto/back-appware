@@ -22,8 +22,9 @@ class CategoryResources(Resource):
         
         qry = Category.query.filter_by(category=args['category']).all()
         
-        if qry != None :
-            return {"message":"Category is exist. You must add unique category"}, 400
+        if qry is not None :
+            return {"message":"Category is exist. You must add unique category",
+                    "category":marshal(qry,category_fields)}, 400
         
         add_category = Category(
             userID = userID,
@@ -68,3 +69,29 @@ class CategoryResources(Resource):
         db.session.commit()
 
         return {"message":"Delete Category Successfull"}, 200
+
+    @jwt_required
+    def get(self):
+        userID = get_jwt_identity()
+
+        parser = reqparse.RequestParser()
+        parser.add_argument("search", type=str, location="args", help="search must Exist")
+        args = parser.parse_args()
+
+        if args['search'] is not None:
+            search = args['search']
+            # Fungsi untuk search, digunakan filter daripada filter_by 
+			# karena butuh method like dengan regex %
+            qry = Category.query.filter_by(userID=userID)\
+                                .filter(Category.category.like('%'+search+'%')).all()
+            if qry is None:
+                return{"message":"Search not Found"}, 404
+            return {"message":"Search Result",
+                    "category":marshal(qry,category_fields)}, 200
+            
+        else:
+            # Query untuk mendapatkan semua kategori
+            qry = Category.query.filter_by(userID=userID).all()
+
+            return {"message":"All Category from user",
+                    "category":marshal(qry,category_fields)}, 200
