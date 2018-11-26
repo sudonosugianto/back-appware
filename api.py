@@ -16,7 +16,7 @@ from resourceSales import SaleResources
 
 from resourcePO import POResources
 from resourceStocks import StockResources
-from resourcePOdetails import PODetailResources
+from resourcePODetails import PODetailResources
 ############## Finish Style ##################
 
 
