@@ -15,6 +15,7 @@ item_fields = {
     "id":fields.Integer,
     "userID":fields.Integer,
     "catID": fields.Integer,
+    "Category.category": fields.String,
     "item":fields.String,
     "picture":fields.String,
     "size":fields.Integer,
