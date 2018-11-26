@@ -101,11 +101,11 @@ sale_fields = {
 stock_fields = {
     "id": fields.Integer,
     "packagesID": fields.Integer,
-    # "Packages.package_name": fields.String,
+    "packages.package_name": fields.String,
     "beginning": fields.Integer,
-    "PO": fields.Integer,
-    # "sale": fields.Integer,
-    # "adjusment": fields.Integer,
+    "purchaseOrder": fields.Integer,
+    "sale": fields.Integer,
+    "adjusment": fields.Integer,
     "status":fields.Boolean,
     "created_at": fields.String,
     "updated_at": fields.String

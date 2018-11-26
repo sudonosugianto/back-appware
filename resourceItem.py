@@ -65,7 +65,6 @@ class ItemResources(Resource):
     @jwt_required
     def put(self,id=None):
         # userID = get_jwt_identity()
-        
         parser = reqparse.RequestParser()
         parser.add_argument("catID", type=int, location="json", help="CategoryID must Exist")
         parser.add_argument("item", type=str, location="json", required=True, help="Item must be string and exist")
@@ -74,7 +73,7 @@ class ItemResources(Resource):
         parser.add_argument("unit", type=str, location="json", required=False, help="Unit must be String")
         parser.add_argument("SKU", type=str,location="json",required = False, help="Stock Keeping Unit must be Integer")
         args = parser.parse_args()
-        
+
         qry = Items.query.filter_by(id=id).first()
         if args['catID'] != None:
             qry.catID = args['catID']

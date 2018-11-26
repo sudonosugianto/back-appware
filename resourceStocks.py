@@ -48,7 +48,6 @@ class StockResources(Resource):
             #                                 'package_name':fields.String}),
             "stock": marshal(qry, stock_fields)
         } ,200
-
     @jwt_required
     def put(self,id=None):
         my_identity = get_jwt_identity()
@@ -61,7 +60,7 @@ class StockResources(Resource):
         parser = reqparse.RequestParser()
         # Package ID diberikan choices hanya ID yang dimiliki user
         parser.add_argument('packagesID', type = int, help='You\'re pick a wrong choice', location='json')
-        parser.add_argument('PO', type = int, help='PO must be int type', location='json')
+        parser.add_argument('purchaseOrder', type = int, help='purchaseOrder must be int type', location='json')
         parser.add_argument('sale', type = int, help='sale must be int type', location='json')
         parser.add_argument('adjustment', type = int, help='adjustment must be int type', location='json')
 
@@ -70,8 +69,8 @@ class StockResources(Resource):
         qry = Stocks.query.filter_by(id=id).first()
         if args['packagesID'] is not None:
             qry.packagesID = args['packagesID']
-        if args['PO'] is not None:
-            qry.PO = args['PO']
+        if args['purchaseOrder'] is not None:
+            qry.purchaseOrder = args['purchaseOrder']
         if args['sale'] is not None:
             qry.sale = args['sale']
         if args['adjustment'] is not None:
@@ -90,32 +89,13 @@ class StockResources(Resource):
      # Untuk menampilkan stocks
     @jwt_required
     def get(self, id=None):
-
         my_identity = get_jwt_identity()
-
-        qry = Stocks.query
-
-        #   get by id
-
-        if id != None:
-           qry = Stocks.query.get(ident=id)
-
-           return {"message":"Your Detail Item by ID",
-                   "stocks":marshal(qry,stock_fields)}, 200
-
-        # get all
-
-        qry = qry.filter_by(userStocksID = my_identity).all()
-
-        rows = []
-
-        for row in qry.all():
-            row.append(marshal(rows, stock_fields))
-
-        if rows == []:
-            return {'message': 'stock not found'}, 404
-
-        return {
-            "message": "success",
-            "stocks": marshal(qry, stock_fields)
-        }, 200
+        
+        if id is not None:
+            qry = Stocks.query.get(ident=id)
+            return {"stocks":marshal(qry, stock_fields)}
+        else:
+            qry = Stocks.query.filter_by(userStocksID = my_identity).all()
+        
+        return { "message":"Success",
+                 "stocks": marshal(qry, stock_fields)}, 200
