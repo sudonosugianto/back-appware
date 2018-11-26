@@ -10,6 +10,8 @@ class Stocks(db.Model):
     status = db.Column(db.Boolean, default=1)
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
+    # relationship
+    sales = db.relationship("Sales", backref="Stocks", lazy=True)
 
     # backref
     PO = db.relationship('PO', backref='stocks', lazy=True)

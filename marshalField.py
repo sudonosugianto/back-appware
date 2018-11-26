@@ -44,7 +44,7 @@ package_fields = {
     "created_at": fields.String,
     "updated_at": fields.String,
     "Users.fullname": fields.String,
-    "Items.category.category": fields.String
+    "Category.category": fields.String
 }
 
 supplier_fields = {
@@ -61,6 +61,19 @@ supplier_fields = {
     "updated_at": fields.String
 }
 
+customer_fields = {
+    "id": fields.Integer,
+    "userCustomerID": fields.Integer,
+    "fullname": fields.String,
+    "phoneNumber": fields.String,
+    "email": fields.String,
+    "address": fields.String,
+    "city": fields.String,
+    "state": fields.String,
+    "zipcode": fields.String,
+    "status": fields.Boolean
+}
+
 po_fields = {
     "id": fields.Integer,
     "supplierID": fields.Integer,
@@ -72,6 +85,18 @@ po_fields = {
     "updated_at": fields.String
 }
 
+sale_fields = {
+    "id": fields.Integer,
+    "userSalesID": fields.Integer,
+    "customerSalesID": fields.Integer,
+    "stockSalesID": fields.Integer,
+    "quantity": fields.Integer,
+    "sellingPrice": fields.Float,
+    "status": fields.Boolean,
+    "created_at": fields.String,
+    "updated_at": fields.String
+}
+
 stock_fields = {
     "id": fields.Integer,
     "packagesID": fields.Integer,
@@ -79,7 +104,7 @@ stock_fields = {
     "status":fields.Boolean,
     "created_at": fields.String,
     "updated_at": fields.String
-    }
+}
 
 podetail_fields = {
     "id": fields.Integer,

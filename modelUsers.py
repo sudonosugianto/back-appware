@@ -17,5 +17,8 @@ class Users(db.Model):
     Items = db.relationship('Items', backref='users', lazy=True)
     packages =  db.relationship('Packages', backref='Users', lazy=True)
     suppliers = db.relationship('Suppliers',backref='Users', lazy=True)
+    customers = db.relationship("Customers", backref="Users", lazy=True)
+    sales = db.relationship("Sales", backref="Users", lazy=True)
+
     def __repr__(self):
         return "<Users %r>" % self.id

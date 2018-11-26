@@ -94,11 +94,33 @@ class PackageResources(Resource):
 
     # Untuk menampilkan package
     @jwt_required
-    def get(self):
+    def get(self, id=None):
 
         my_identity = get_jwt_identity()
 
-        qry = Packages.query.filter_by(userPackageID = my_identity)
+        qry = Packages.query
+
+        #   get by id
+
+        if id != None:
+            qry = qry.filter_by(userPackageID = my_identity).filter_by(id = id)
+
+            rows = []
+
+            for row in qry.all():
+                rows.append(marshal(row, package_fields))
+
+            if rows == []:
+                return {'message': 'package not found'}, 404
+
+            return {
+                "message": "success",
+                "package": rows
+            }, 200
+
+        # get all
+
+        qry = qry.filter_by(userPackageID = my_identity)
 
         rows = []
 
@@ -110,5 +132,5 @@ class PackageResources(Resource):
 
         return {
             "message": "success",
-            "user": rows
+            "packages": rows
         }, 200
