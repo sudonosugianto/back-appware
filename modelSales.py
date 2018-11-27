@@ -5,10 +5,11 @@ class Sales(db.Model):
     # foreign key field
     userSalesID = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable = False)
     customerSalesID = db.Column(db.Integer, db.ForeignKey('customers.id', ondelete='CASCADE'), nullable = False)
-    stockSalesID = db.Column(db.Integer, db.ForeignKey('stocks.id', ondelete='CASCADE'), nullable = False)
+    packageSalesID = db.Column(db.Integer, db.ForeignKey('packages.id', ondelete='CASCADE'), nullable = False)
     # field
     quantity = db.Column(db.Integer, nullable=False)
-    sellingPrice = db.Column(db.Float, nullable=False)
+    sellingPricePerPackage = db.Column(db.Float, nullable=False)
+    totalPrice = db.Column(db.Float)
     status = db.Column(db.Boolean, default=1)
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())

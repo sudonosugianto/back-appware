@@ -113,7 +113,7 @@ class UserResources(Resource):
         return {'message': "delete user success"}, 200
 
     @jwt_required
-    def get(self, id):
+    def get(self):
 
         my_identity = get_jwt_identity()
 

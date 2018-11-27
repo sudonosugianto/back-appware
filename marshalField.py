@@ -40,12 +40,13 @@ package_fields = {
     "itemID": fields.Integer,
     "package_name": fields.String,
     "Items.item": fields.String,
+    "Items.Category.category": fields.String,
     "items_quantity": fields.Integer,
     "status": fields.Boolean,
     "created_at": fields.String,
     "updated_at": fields.String,
     "Users.fullname": fields.String,
-    "Category.category": fields.String
+    "Category.category": fields.String,
 }
 
 supplier_fields = {
@@ -78,10 +79,13 @@ customer_fields = {
 po_fields = {
     "id": fields.Integer,
     "supplierID": fields.Integer,
-    "stockID": fields.Integer,
-    "total_price": fields.Float,
-    "status":fields.Boolean,
+    "userPOID": fields.Integer,
+    "packagePOID": fields.Integer,
+    "quantity": fields.Integer,
+    "buyingPricePerPackage": fields.Float,
+    "totalPrice": fields.Float,
     "notes" : fields.String,
+    "status":fields.Boolean,
     "created_at": fields.String,
     "updated_at": fields.String
 }
@@ -90,43 +94,20 @@ sale_fields = {
     "id": fields.Integer,
     "userSalesID": fields.Integer,
     "customerSalesID": fields.Integer,
-    "stockSalesID": fields.Integer,
+    "packageSalesID": fields.Integer,
     "quantity": fields.Integer,
-    "sellingPrice": fields.Float,
+    "sellingPricePerPackage": fields.Float,
+    "totalPrice":fields.Float,
     "status": fields.Boolean,
     "created_at": fields.String,
     "updated_at": fields.String
 }
 
-stock_fields = {
+actualstock_fields = {
     "id": fields.Integer,
-    "packagesID": fields.Integer,
-    "packages.package_name": fields.String,
-    "beginning": fields.Integer,
-    "purchaseOrder": fields.Integer,
-    "sale": fields.Integer,
-    "adjusment": fields.Integer,
-    "status":fields.Boolean,
-    "created_at": fields.String,
-    "updated_at": fields.String
-}
-
-podetail_fields = {
-    "id": fields.Integer,
-    "POID": fields.Integer,
-    "packageID": fields.Integer,
-    "packagename":fields.String,
-    "inStock":fields.Integer,
-    "order":fields.Integer,
-    "unitCost":fields.Float,
-    "subTotal":fields.Float
-}
-
-adjustment_fields = {
-    "id": fields.Integer,
-    "userAdjustmentsID": fields.Integer,
-    "stockAdjustmentsID": fields.Integer,
-    "actualStocks": fields.Integer,
+    "userActualStocksID": fields.Integer,
+    "packageActualStocksID": fields.Integer,
+    "actual_stock": fields.Integer,
     "notes": fields.String,
     "status": fields.Boolean,
     "created_at": fields.String,

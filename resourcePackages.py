@@ -1,10 +1,12 @@
 from flask_restful import Resource, Api, reqparse, marshal, fields
 from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, jwt_required, get_jwt_claims, verify_jwt_in_request
 import datetime
+from sqlalchemy import or_
 
 from models import db
 ####### Tempat import Model#########
 from modelPackages import Packages
+from modelItems import Items
 ####### Finish import Model#########
 
 
@@ -44,9 +46,9 @@ class PackageResources(Resource):
     @jwt_required
     def put(self, id):
         parser = reqparse.RequestParser()
-        parser.add_argument('itemID', type = str, help='itemID must be string type', location='json')
+        parser.add_argument('itemID', type = int, help='itemID must be integer type', location='json')
         parser.add_argument('package_name', type = str, help='package_name must be string type', location='json')
-        parser.add_argument('items_quantity', type = str, help='items_quantity must be string type', location='json')
+        parser.add_argument('items_quantity', type = int, help='items_quantity must be string type', location='json')
 
         args = parser.parse_args()
         
@@ -115,7 +117,15 @@ class PackageResources(Resource):
 
         # get all
 
+        parser=reqparse.RequestParser()
+        parser.add_argument('search',type=str,location='args')
+        args=parser.parse_args()
+
         qry = qry.filter_by(userPackageID = my_identity)
+
+        if args['search'] is not None:
+                search = args["search"]
+                qry = qry.filter(or_(Packages.package_name.like('%'+search+'%'), Items.item.like('%'+search+'%')))
 
         rows = []
 

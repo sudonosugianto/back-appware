@@ -25,7 +25,7 @@ class CategoryResources(Resource):
             category = args['category']
         )
         db.session.add(add_category)
-        db.session.commit() 
+        db.session.commit()
         return {
             "message": "add Category success",
             "category": marshal(add_category, category_fields)
@@ -67,9 +67,11 @@ class CategoryResources(Resource):
     @jwt_required
     def get(self,id=None):
         userID = get_jwt_identity()
-
+        qry = Category.query
         parser = reqparse.RequestParser()
-        parser.add_argument("search", type=str, location="args", help="search must Exist")
+        parser.add_argument("search", type=str, location="args", help="search must string")
+        parser.add_argument('orderBy',location='args',help='invalid order by',choices=("category"))
+        parser.add_argument('sort',location='args',help='invalid sort',choices=('desc','asc'))
         args = parser.parse_args()
 
         if id is None :
@@ -77,15 +79,22 @@ class CategoryResources(Resource):
                 search = args['search']
                 # Fungsi untuk search, digunakan filter daripada filter_by 
                 # karena butuh method like dengan regex %
-                qry = Category.query.filter_by(userID=userID)\
-                                    .filter(Category.category.like('%'+search+'%')).all()
-                if qry is None:
-                    return{"message":"Search not Found"}, 404
-                return {"message":"Search Result",
-                        "category":marshal(qry,category_fields)}, 200
+                qry = qry.filter_by(userID=userID)\
+                                    .filter(Category.category.like('%'+search+'%'))
+
+            if args["sort"] is not None:
+                sort = args['sort']
+                if args['orderBy']=='category':
+                    qry=qry.order_by('category %s'%(sort))
+
+            if qry is None:
+                return{"message":"Search not Found"}, 404
+            
             else:
                 # Query untuk mendapatkan semua kategori
-                qry = Category.query.filter_by(userID=userID).all()
+                qry = qry.filter_by(userID=userID).all()
+            return {"message":"Search Result",
+                    "category":marshal(qry,category_fields)}, 200
         else :
             qry = Category.query.get(ident=id)
         return {"message":"All Category from user",
