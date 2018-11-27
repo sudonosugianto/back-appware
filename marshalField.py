@@ -79,6 +79,8 @@ customer_fields = {
 po_fields = {
     "id": fields.Integer,
     "supplierID": fields.Integer,
+    "Suppliers.name": fields.String,
+    "Packages.package_name": fields.String,
     "userPOID": fields.Integer,
     "packagePOID": fields.Integer,
     "quantity": fields.Integer,

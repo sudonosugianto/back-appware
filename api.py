@@ -15,7 +15,7 @@ from resourceCustomers import CustomerResources
 from resourceSales import SaleResources
 from resourcePO import POResources
 from resourceActualStock import ActualStockResources
-
+from resourceSummary import SummaryResources
 ############## Finish Style ##################
 
 
@@ -30,6 +30,7 @@ api.add_resource(CustomerResources, "/api/users/customers","/api/users/customers
 api.add_resource(POResources, "/api/users/po","/api/users/po/<int:id>")
 api.add_resource(SaleResources, "/api/users/sales","/api/users/sales/<int:id>")
 api.add_resource(ActualStockResources, "/api/users/actualstock","/api/users/actualstock/<int:id>")
+api.add_resource(SummaryResources, "/api/users/summary")
 # api.add_resource()
 
 ################# Finished Endpoint ################
