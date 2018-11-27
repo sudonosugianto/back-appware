@@ -104,12 +104,12 @@ sale_fields = {
 }
 
 actualstock_fields = {
-   "id": fields.Integer,
-   "userActualStocksID": fields.Integer,
-   "packageActualStocksID": fields.Integer,
-   "actual_stock": fields.Integer,
-   "notes": fields.String,
-   "status": fields.Boolean,
-   "created_at": fields.String,
-   "updated_at": fields.String
+    "id": fields.Integer,
+    "userActualStocksID": fields.Integer,
+    "packageActualStocksID": fields.Integer,
+    "actual_stock": fields.Integer,
+    "notes": fields.String,
+    "status": fields.Boolean,
+    "created_at": fields.String,
+    "updated_at": fields.String
 }
