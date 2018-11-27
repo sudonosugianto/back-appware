@@ -15,7 +15,7 @@ class Packages(db.Model):
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
 
     # Backref
-    ActualStocks = db.relationship('ActualStocks', backref='packages', lazy=True)
+    ActualStock = db.relationship('ActualStock', backref='packages', lazy=True)
     PO = db.relationship('PO', backref='packages', lazy=True)
     Sale = db.relationship('Sales', backref='packages', lazy=True)
     def __repr__(self):

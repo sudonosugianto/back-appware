@@ -15,7 +15,6 @@ class PO(db.Model):
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
 
-    # Backref
     def __repr__(self):
         return "<PO %r>" % self.id
 
