@@ -5,7 +5,7 @@ from sqlalchemy import or_
 
 from models import db
 ####### Tempat import Model#########
-from modelActuaStock import ActualStock
+from modelActualStock import ActualStock
 ####### Finish import Model#########
 
 
@@ -13,7 +13,7 @@ from modelActuaStock import ActualStock
 from marshalField import actualstock_fields
 ####### Finish import Marshal#########
 
-class PackageResources(Resource):
+class ActualStockResources(Resource):
 
     # Untuk tambah actual stock
     @jwt_required
