@@ -108,5 +108,3 @@ class SummaryResources(Resource):
             packageDetail = {}
 
         return {"result": result}, 200
-        
-        
