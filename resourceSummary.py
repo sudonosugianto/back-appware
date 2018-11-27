@@ -87,7 +87,7 @@ class SummaryResources(Resource):
         result= []
         
         for i in range (0, len(idPackages)):
-            filter_day = datetime.today
+            # filter_day = datetime.today
             packageName = namePackages[i]
             showPO = self.getQuantityPOPerDay(idPackages[i], dataPO)
             showSale = self.getQuantitySalePerDay(idPackages[i], dataSales)
@@ -108,5 +108,3 @@ class SummaryResources(Resource):
             packageDetail = {}
 
         return {"result": result}, 200
-        
-        
