@@ -46,9 +46,9 @@ class PackageResources(Resource):
     @jwt_required
     def put(self, id):
         parser = reqparse.RequestParser()
-        parser.add_argument('itemID', type = str, help='itemID must be string type', location='json')
+        parser.add_argument('itemID', type = int, help='itemID must be integer type', location='json')
         parser.add_argument('package_name', type = str, help='package_name must be string type', location='json')
-        parser.add_argument('items_quantity', type = str, help='items_quantity must be string type', location='json')
+        parser.add_argument('items_quantity', type = int, help='items_quantity must be string type', location='json')
 
         args = parser.parse_args()
         
