@@ -20,6 +20,7 @@ class Users(db.Model):
     customers = db.relationship("Customers", backref="Users", lazy=True)
     sales = db.relationship("Sales", backref="Users", lazy=True)
     po = db.relationship("PO", backref="users", lazy=True)
+    actualstocks = db.relationship("ActualStocks", backref="users", lazy=True)
 
     def __repr__(self):
         return "<Users %r>" % self.id
