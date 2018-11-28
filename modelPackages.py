@@ -6,7 +6,7 @@ class Packages(db.Model):
     # foreign key field
     itemID = db.Column(db.Integer, db.ForeignKey("items.id", ondelete='CASCADE'), nullable=False)
     userPackageID = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable = False)
-    catPackageID = db.Column(db.Integer, db.ForeignKey('category.id',ondelete='CASCADE'),nullable=False, default=1) 
+    catPackageID = db.Column(db.Integer, db.ForeignKey('category.id',ondelete='CASCADE')) 
     # field
     package_name = db.Column(db.String(50), nullable=False)
     items_quantity = db.Column(db.Integer, nullable=False, default=0)

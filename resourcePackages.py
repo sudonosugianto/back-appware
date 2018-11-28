@@ -12,6 +12,7 @@ from modelItems import Items
 
 ####### Tempat import Marshal#########
 from marshalField import package_fields
+from marshalField import item_fields
 ####### Finish import Marshal#########
 
 class PackageResources(Resource):
@@ -28,6 +29,7 @@ class PackageResources(Resource):
         my_identity = get_jwt_identity()
 
         add_package = Packages(
+            catPackageID = marshal(Items.query.filter_by(id=args["itemID"]).first(), item_fields)["catID"],
             userPackageID = my_identity,
             itemID = args['itemID'],
             package_name = args['package_name'],
