@@ -117,3 +117,4 @@ actualstock_fields = {
     "created_at": fields.String,
     "updated_at": fields.String
 }
+
