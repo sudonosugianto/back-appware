@@ -130,7 +130,7 @@ class SaleResources(Resource):
             }, 200
 
         # get all
-
+        qry = qry.filter_by(userSalesID=my_identity)
         rows = []
 
         for row in qry.all():

@@ -96,9 +96,9 @@ sale_fields = {
     "id": fields.Integer,
     "userSalesID": fields.Integer,
     "customerSalesID": fields.Integer,
-    "Customers.fullname": fields.String,
+    "customers.fullname": fields.String,
     "packageSalesID": fields.Integer,
-    "Packages.package_name": fields.String,
+    "packages.package_name": fields.String,
     "quantity": fields.Integer,
     "sellingPricePerPackage": fields.Float,
     "totalPrice":fields.Float,
@@ -117,3 +117,4 @@ actualstock_fields = {
     "created_at": fields.String,
     "updated_at": fields.String
 }
+
