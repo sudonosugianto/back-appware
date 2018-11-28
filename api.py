@@ -17,8 +17,11 @@ from resourcePO import POResources
 from resourceActualStock import ActualStockResources
 from resourceSummary import SummaryResources
 from resourceCatByVol import CatByVolResources
+from resourceTopItemsByCategory import TopItemsByCatResources
 from resourceTransactionsSummary import TransactionsSummaryResources
 from resourcePackagesSummary import PackagesSummaryResources
+
+from resourceCatSummary import CategorySummaryResources
 ############## Finish Style ##################
 
 
@@ -35,8 +38,10 @@ api.add_resource(SaleResources, "/api/users/sales","/api/users/sales/<int:id>")
 api.add_resource(ActualStockResources, "/api/users/actualstock","/api/users/actualstock/<int:id>")
 api.add_resource(SummaryResources, "/api/users/summary")
 api.add_resource(CatByVolResources, "/api/user/catbyvol")
+api.add_resource(TopItemsByCatResources,"/api/user/topitemcat")
 api.add_resource(TransactionsSummaryResources, "/api/users/transactionssummary")
 api.add_resource(PackagesSummaryResources, "/api/users/packagessummary")
+api.add_resource(CategorySummaryResources, "/api/user/categorysummary")
 
 # api.add_resource()
 
@@ -47,6 +52,6 @@ if __name__ == '__main__':
         if  sys.argv[1] == 'db':
             manager.run()
         else:
-            app.run(debug=True, host = '0.0.0.0', port = 5000)
+            app.run(debug=True, host = '0.0.0.0', port = 5001)
     except  IndexError as p:
-        app.run(debug=True, host = '0.0.0.0', port = 5000)
+        app.run(debug=True, host = '0.0.0.0', port = 5001)
