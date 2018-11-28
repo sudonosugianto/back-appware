@@ -17,6 +17,8 @@ from resourcePO import POResources
 from resourceActualStock import ActualStockResources
 from resourceSummary import SummaryResources
 from resourceCatByVol import CatByVolResources
+from resourceTransactionsSummary import TransactionsSummaryResources
+from resourcePackagesSummary import PackagesSummaryResources
 ############## Finish Style ##################
 
 
@@ -33,6 +35,9 @@ api.add_resource(SaleResources, "/api/users/sales","/api/users/sales/<int:id>")
 api.add_resource(ActualStockResources, "/api/users/actualstock","/api/users/actualstock/<int:id>")
 api.add_resource(SummaryResources, "/api/users/summary")
 api.add_resource(CatByVolResources, "/api/user/catbyvol")
+api.add_resource(TransactionsSummaryResources, "/api/users/transactionssummary")
+api.add_resource(PackagesSummaryResources, "/api/users/packagessummary")
+
 # api.add_resource()
 
 ################# Finished Endpoint ################
