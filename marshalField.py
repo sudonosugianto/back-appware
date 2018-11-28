@@ -79,10 +79,10 @@ customer_fields = {
 po_fields = {
     "id": fields.Integer,
     "supplierID": fields.Integer,
-    "Suppliers.name": fields.String,
+    "suppliers.name": fields.String,
     "userPOID": fields.Integer,
     "packagePOID": fields.Integer,
-    "Packages.package_name": fields.String,
+    "packages.package_name": fields.String,
     "quantity": fields.Integer,
     "buyingPricePerPackage": fields.Float,
     "totalPrice": fields.Float,
