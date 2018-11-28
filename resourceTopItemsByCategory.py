@@ -35,12 +35,12 @@ class TopItemsByCatResources(Resource):
         qryCategory = Category.query.filter_by(userID = my_identity).all()
         qryPackage = Packages.query.filter_by(userPackageID = my_identity).all()
 
-        TopItemAll = []
         for i in range(0,len(qryCategory)):
             catID = qryCategory[i].id
             catName = qryCategory[i].category
 
-            
+            TopItemAll = []
+            tmp = { catName : TopItemAll}
             
             # query Item Berdasarkan  Kategori
             qryItems = Items.query.filter_by( userID = my_identity).filter_by(catID = catID).all()
@@ -63,10 +63,10 @@ class TopItemsByCatResources(Resource):
                     jumlahSaleperPackage += qrySale[k].quantity
                 # End of Perhitungan Jumlah Sales per Package #############
 
-                TopItemAll.append({"category":catName,"itemID":itemID,"name":itemName,\
+                TopItemAll.append({"itemID":itemID,"name":itemName,\
                                     "packageID":packageID,"packageName":packageName,
                                     "totalItem":jumlahSaleperPackage})
-            
+            TopItemCatAll.append(tmp)
 
         # print(TopItemAll)
-        return TopItemAll
+        return TopItemCatAll
