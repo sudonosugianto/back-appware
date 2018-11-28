@@ -39,9 +39,6 @@ class CategorySummaryResources(Resource):
         for i in range(0,len(qryCategory)):
             catID = qryCategory[i].id
             catName = qryCategory[i].category
-
-            TopItemAll = []
-            tmp = { catName : TopItemAll}
             
             # query Item Berdasarkan  Kategori
             
@@ -56,25 +53,27 @@ class CategorySummaryResources(Resource):
             grossSalePerCategory = 0
             itemSellperCategory = 0
             itemPOPerCategory = 0
-            allProductPrice = 0
+            modalPerCategory = 0
             for j in range(0,len(qrySaleperCategory)):
                 itemSellperCategory += qrySaleperCategory[j].quantity
                 grossSalePerCategory += qrySaleperCategory[j].totalPrice
             
             for i in range(0, len(qryPOperCategory)):
-                allProductPrice += qryPOperCategory[i].totalPrice
+                modalPerCategory += qryPOperCategory[i].totalPrice
                 itemPOPerCategory += qryPOperCategory[i].quantity
 
             Assets = itemPOPerCategory - itemSellperCategory
             meanPriceProduct = grossSalePerCategory / itemSellperCategory
             profitAssets = Assets*meanPriceProduct
+            margin = grossSalePerCategory - modalPerCategory
             return({
                     # "PO":marshal(qryPOperCategory, po_fields),
                     # "Sales":marshal(qrySaleperCategory, sale_fields),
                     "items Stock":itemPOPerCategory,
                     "items Sold": itemSellperCategory,
                     "Assets":Assets,
-                    "Harga Beli Semua Produk":allProductPrice,
+                    "modalPerCategory":modalPerCategory,
+                    "margin":margin,
                     "GSPC": grossSalePerCategory,
                     "MPP": ceil(meanPriceProduct),
                     "profitAssets": ceil(profitAssets)})
