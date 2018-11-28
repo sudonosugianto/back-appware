@@ -83,15 +83,14 @@ class CatByVolResources(Resource):
             idPackages = []
         # return listA
 
-        showPO = 0
-        showSale =  0
 
-        for item1 in listA:
-            for item2 in item1:
+        listPerCat = []
+        for i in range (0, len(listA)):
+            showPO = 0
+            showSale =  0
+            for item2 in listA[i]:
                 showPO += self.getQuantityPO(item2, dataPO)
                 showSale += self.getQuantitySale(item2, dataSales)
-                
-        return {
-            "PO": showPO,
-            "Sales": showSale
-        }, 200
+                volume = showPO - showSale
+            listPerCat.append({nameCategories[i]: {"PO": showPO, "Sales": showSale, "volume": volume}})
+        return listPerCat, 200
