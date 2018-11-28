@@ -31,7 +31,7 @@ class CategorySummaryResources(Resource):
     
     @jwt_required
     def get(self):
-        TopItemCatAll = []
+        summary = []
         my_identity = get_jwt_identity()
         # Get Category per user
         qryCategory = Category.query.filter_by(userID = my_identity).all()
@@ -41,7 +41,6 @@ class CategorySummaryResources(Resource):
             catName = qryCategory[i].category
             
             # query Item Berdasarkan  Kategori
-            
             qryPOperCategory = PO.query.join(Packages, PO.packagePOID == Packages.id)\
                                        .join(Items, Packages.itemID == Items.id)\
                                        .filter(Items.catID == catID).all()
@@ -66,9 +65,7 @@ class CategorySummaryResources(Resource):
             meanPriceProduct = grossSalePerCategory / itemSellperCategory
             profitAssets = Assets*meanPriceProduct
             margin = grossSalePerCategory - modalPerCategory
-            return({
-                    # "PO":marshal(qryPOperCategory, po_fields),
-                    # "Sales":marshal(qrySaleperCategory, sale_fields),
+            tmp = {catName:{
                     "items Stock":itemPOPerCategory,
                     "items Sold": itemSellperCategory,
                     "Assets":Assets,
@@ -76,29 +73,9 @@ class CategorySummaryResources(Resource):
                     "margin":margin,
                     "GSPC": grossSalePerCategory,
                     "MPP": ceil(meanPriceProduct),
-                    "profitAssets": ceil(profitAssets)})
-
-        #         itemID = qryPOperCategory[j].id
-        #         itemName = qryPOperCategory[j].item
-                
-        #         # query Packages Berdasarkan Item
-        #         qryItemsPack = Packages.query.filter_by(itemID = itemID).first()
-                
-        #         packageID = qryItemsPack.id
-        #         packageName = qryItemsPack.package_name
-
-        #         # Start Perhitungan Jumlah Sales per Package #############
-        #         qrySale = Sales.query.filter_by(userSalesID = my_identity)\
-        #                             .filter_by(packageSalesID = packageID).all()
-        #         jumlahSaleperPackage = 0
-        #         for k in range(0,len(qrySale)):
-        #             jumlahSaleperPackage += qrySale[k].quantity
-        #         # End of Perhitungan Jumlah Sales per Package #############
-
-        #         TopItemAll.append({"itemID":itemID,"name":itemName,\
-        #                             "packageID":packageID,"packageName":packageName,
-        #                             "totalItem":jumlahSaleperPackage})
-        #     TopItemCatAll.append(tmp)
-
-        # # print(TopItemAll)
-        # return {"result":TopItemCatAll}
+                    "profitAssets": ceil(profitAssets)
+                    }}
+            
+            summary.append(tmp)
+        
+        return summary
