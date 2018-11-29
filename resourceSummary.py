@@ -1,7 +1,7 @@
 from flask_restful import Resource, Api, reqparse, marshal, fields
 from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, jwt_required, get_jwt_claims, verify_jwt_in_request
 import datetime
-from sqlalchemy import or_, func, desc
+from sqlalchemy import or_, func, desc, and_
 from datetime import datetime, timedelta
 
 from models import db
@@ -28,11 +28,25 @@ class SummaryResources(Resource):
         summary=[]
         my_identity = get_jwt_identity()
         
-        qryPackage = Packages.query.filter_by(userPackageID = my_identity).all()
+        parser = reqparse.RequestParser()
+        parser.add_argument("dateStart", type=str, location="args", help="Date Time must be in format YYYY-MM-DD HH:MM:SS")
+        parser.add_argument("dateEnd", type=str, location="args", help="Date Time must be in format YYYY-MM-DD HH:MM:SS")
+        args = parser.parse_args()
 
+        # dateInput = datetime.strptime(args['date'], '%Y-%m-%d %H:%M:%S')
+
+        dateStart = args['dateStart']
+        dateEnd = args['dateEnd']
+        
+        qryPackage = Packages.query.filter_by(userPackageID = my_identity).all()
         qryPO = PO.query.join(Packages, PO.packagePOID == Packages.id).filter(PO.userPOID == my_identity)
         qrySales= Sales.query.join(Packages, Sales.packageSalesID == Packages.id).filter(Sales.userSalesID == my_identity)
         qryActualStock = ActualStock.query.filter(ActualStock.userActualStocksID == my_identity)
+
+        # Filter by date
+        if args['dateStart'] != None and args['dateEnd'] != None:
+            qryPO = qryPO.filter(and_(PO.created_at >= dateStart, PO.created_at <= dateEnd))
+            qrySales = qrySales.filter(and_(Sales.created_at >= dateStart, Sales.created_at <= dateEnd))
 
         for i in range(0,len(qryPackage)):
             packageID = qryPackage[i].id
