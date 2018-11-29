@@ -1,12 +1,13 @@
 from flask_restful import Resource, Api, reqparse, marshal, fields
 from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, jwt_required, get_jwt_claims, verify_jwt_in_request
 import datetime
-from sqlalchemy import or_
+from sqlalchemy import or_, desc
 
 from models import db
 ####### Tempat import Model#########
 from modelPackages import Packages
 from modelItems import Items
+from modelCat import Category
 ####### Finish import Model#########
 
 
@@ -97,12 +98,13 @@ class PackageResources(Resource):
 
         my_identity = get_jwt_identity()
 
-        qry = Packages.query
+        qry = Packages.query.join(Category, Category.id == Packages.catPackageID)\
+                                .filter(Packages.userPackageID == my_identity).order_by(Packages.package_name)
 
         #   get by id
 
         if id != None:
-            qry = qry.filter_by(userPackageID = my_identity).filter_by(id = id)
+            qry = qry.filter_by(id = id)
 
             rows = []
 
@@ -123,11 +125,10 @@ class PackageResources(Resource):
         parser.add_argument('search',type=str,location='args')
         args=parser.parse_args()
 
-        qry = qry.filter_by(userPackageID = my_identity)
-
         if args['search'] is not None:
                 search = args["search"]
-                qry = qry.filter(or_(Packages.package_name.like('%'+search+'%'), Items.item.like('%'+search+'%')))
+                qry = qry.filter(or_(Packages.package_name.like('%'+search+'%'),Category.category.like('%'+search+'%')))\
+                                .order_by(Packages.package_name)
 
         rows = []
 
