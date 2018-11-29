@@ -67,8 +67,8 @@ class CategorySummaryResources(Resource):
             margin = grossSalePerCategory - modalPerCategory
             tmp = {
                     "category": catName,
-                    "items Stock":itemPOPerCategory,
-                    "items Sold": itemSellperCategory,
+                    "itemsStock":itemPOPerCategory,
+                    "itemsSold": itemSellperCategory,
                     "Assets":Assets,
                     "modalPerCategory":modalPerCategory,
                     "margin":margin,
