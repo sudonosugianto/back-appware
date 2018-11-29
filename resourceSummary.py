@@ -22,89 +22,59 @@ from marshalField import po_fields, actualstock_fields
 
 
 class SummaryResources(Resource):
-
-    def getQuantityPOPerDay(self, packageID, selfPO):
-        # filter per hari
-        filter_day = datetime.today()
-        qryPO = selfPO.filter(PO.created_at <= filter_day)
-        # filter per package
-        qryPO = qryPO.filter_by(packagePOID=packageID).all()
-        # dapatkan quantity PO per hari
-        items = []
-        for item in qryPO:
-            items.append(item.quantity)       
-        POPerDay = sum(items)
-        return POPerDay
-
-    def getQuantitySalePerDay(self, packageID, selfSale):
-        # filter per hari
-        filter_day = datetime.today()
-        qrySale = selfSale.filter(Sales.created_at <= filter_day)
-        # filter per package
-        qrySale = qrySale.filter_by(packageSalesID=packageID).all()
-        # dapatkan quantity sales per hari
-        items = []
-        for item in qrySale:
-            items.append(item.quantity)
-        SalesPerDay = sum(items)
-        return SalesPerDay
-
-    def getActualStock(self, packageID, selfActualStock):
-        filter_day = datetime.today()
-        qryActualStock = selfActualStock.filter_by(packageActualStocksID=packageID).first()
-        
-        if qryActualStock == None:
-            qryActualStock = "kosong"
-            return qryActualStock
-        
-        actual_stock = marshal(qryActualStock, actualstock_fields)["actual_stock"]
-        return actual_stock
-
     # Untuk menampilkan summary
     @jwt_required
     def get(self):
-
+        summary=[]
         my_identity = get_jwt_identity()
-
-
-        dataPackages = Packages.query.filter_by(userPackageID=my_identity).all()
-        dataPO = PO.query.filter_by(userPOID=my_identity)
-        dataSales = Sales.query.filter_by(userSalesID=my_identity)
-        dataActualStock = ActualStock.query.filter_by(userActualStocksID=my_identity)
-
-        rows = []
-        for row in dataPackages:
-            rows.append(marshal(row, package_fields))
-
         
-        idPackages = []
-        namePackages = []
-        for item in rows:
-            idPackages.append(item['id'])
-            namePackages.append(item['package_name'])
+        qryPackage = Packages.query.filter_by(userPackageID = my_identity).all()
+
+        qryPO = PO.query.join(Packages, PO.packagePOID == Packages.id).filter(PO.userPOID == my_identity)
+        qrySales= Sales.query.join(Packages, Sales.packageSalesID == Packages.id).filter(Sales.userSalesID == my_identity)
+        qryActualStock = ActualStock.query.filter(ActualStock.userActualStocksID == my_identity)
+
+        for i in range(0,len(qryPackage)):
+            packageID = qryPackage[i].id
+            itemName = qryPackage[i].Items.item + ' ' + qryPackage[i].package_name
+ 
+            
+            qry = qryPO.filter(Packages.id == packageID).all()
+            qrySale = qrySales.filter(Packages.id == packageID).all()
+            qryActual = qryActualStock.filter(ActualStock.packageActualStocksID == packageID).all()
+
+            #########  Start Perhitungan Total PO per Packages #########
+            totalPO = 0
+            for j in range(0,len(qry)):
+                totalPO += qry[j].quantity
+            #########  End of Perhitungan Total PO per Packages #########
+            #########  Start Perhitungan Total PO per Packages #########
+            totalSales = 0
+            for j in range(0,len(qrySale)):
+                totalSales += qrySale[j].quantity
+            #########  End of Perhitungan Total PO per Packages #########
+            
+            #########  Start Perhitungan Actual Stock per Packages #########
+            if qryActual != []:
+                totalActual = 0
+                for j in range(0,len(qryActual)):
+                    totalActual += qryActual[j].actual_stock
+            else:
+                totalActual = totalPO - totalSales
+            #########  End of Perhitungan Actual Stock per Packages #########
+            
+            Ending = totalPO - totalSales
+            Adjusment = Ending - totalActual
+            
+            tmp = { "message":"Summary per Item Package", 
+                "Package": itemName,
+                "POQuantity": totalPO,
+                "SalesQuantity": totalSales,
+                "Adjusment": Adjusment,
+                # "ActualStock": totalActual,
+                "Ending":Ending}
+
+            summary.append(tmp) 
+            
         
-        packageDetail = {}
-        result= []
-        
-        for i in range (0, len(idPackages)):
-            # filter_day = datetime.today
-            packageName = namePackages[i]
-            showPO = self.getQuantityPOPerDay(idPackages[i], dataPO)
-            showSale = self.getQuantitySalePerDay(idPackages[i], dataSales)
-            showActualStock = self.getActualStock(idPackages[i], dataActualStock)
-            packageDetail["date"] = "today"
-            packageDetail["packageName"] = packageName
-            packageDetail["PO"] = showPO
-            packageDetail["sales"] = showSale
-            teori = showPO - showSale
-
-            if showActualStock == "kosong":
-                showActualStock = teori
-
-            packageDetail["actualStock"] = showActualStock
-            packageDetail["adjustment"] = showPO - showSale - showActualStock
-            packageDetail["Ending"] = showPO - showSale - (showPO - showSale - showActualStock)
-            result.append(packageDetail)
-            packageDetail = {}
-
-        return {"result": result}, 200
+        return summary
