@@ -50,7 +50,7 @@ class SummaryResources(Resource):
 
         for i in range(0,len(qryPackage)):
             packageID = qryPackage[i].id
-            itemName = qryPackage[i].Items.item + ' ' + qryPackage[i].package_name
+            itemName = qryPackage[i].Items.item + ' per ' + qryPackage[i].package_name
  
             
             qry = qryPO.filter(Packages.id == packageID).all()

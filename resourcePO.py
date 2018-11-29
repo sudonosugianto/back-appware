@@ -1,6 +1,6 @@
 from flask_restful import Resource, Api, reqparse, marshal, fields
 from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, jwt_required, get_jwt_claims, verify_jwt_in_request
-from sqlalchemy import desc, between, and_
+from sqlalchemy import desc, between, and_, or_
 from datetime import datetime
 
 from models import db
