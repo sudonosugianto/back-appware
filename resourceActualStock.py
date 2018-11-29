@@ -1,7 +1,7 @@
 from flask_restful import Resource, Api, reqparse, marshal, fields
 from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, jwt_required, get_jwt_claims, verify_jwt_in_request
 import datetime
-from sqlalchemy import or_
+from sqlalchemy import or_, desc
 
 from models import db
 ####### Tempat import Model#########
@@ -114,7 +114,7 @@ class ActualStockResources(Resource):
 
         # get all
 
-        qry = qry.filter_by(userActualStocksID = my_identity)
+        qry = qry.filter_by(userActualStocksID = my_identity).order_by(desc(ActualStock.created_at))
 
         rows = []
 

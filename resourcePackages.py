@@ -98,13 +98,13 @@ class PackageResources(Resource):
 
         my_identity = get_jwt_identity()
 
-        qry = Packages.query.join(Category, Category.id == Packages.catPackageID)\
+        qry = Packages.query.join(Items, Items.id == Packages.itemID)\
                                 .filter(Packages.userPackageID == my_identity).order_by(Packages.package_name)
 
         #   get by id
 
         if id != None:
-            qry = qry.filter_by(id = id)
+            qry = qry.filter(Packages.id == id)
 
             rows = []
 
@@ -127,7 +127,7 @@ class PackageResources(Resource):
 
         if args['search'] is not None:
                 search = args["search"]
-                qry = qry.filter(or_(Packages.package_name.like('%'+search+'%'),Category.category.like('%'+search+'%')))\
+                qry = qry.filter(or_(Packages.package_name.like('%'+search+'%'),Items.item.like('%'+search+'%')))\
                                 .order_by(Packages.package_name)
 
         rows = []
