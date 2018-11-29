@@ -8,6 +8,8 @@ from models import db
 from modelPO import PO
 from modelSuppliers import Suppliers
 from modelPackages import Packages
+from modelCat import Category
+from modelItems import Items
 ####### Finish import Model#########
 
 ####### Tempat import Model#########
@@ -122,6 +124,8 @@ class POResources(Resource):
         my_identity = get_jwt_identity()
 
         parser = reqparse.RequestParser()
+        parser.add_argument("search", type=str, location="args", help="search must string")
+        parser.add_argument('sort',location='args',help='invalid sort',choices=('desc','asc'))
         parser.add_argument("dateStart", type=str, location="args", help="Date Time must be in format YYYY-MM-DD HH:MM:SS")
         parser.add_argument("dateEnd", type=str, location="args", help="Date Time must be in format YYYY-MM-DD HH:MM:SS")
         args = parser.parse_args()
@@ -131,7 +135,10 @@ class POResources(Resource):
         dateStart = args['dateStart']
         dateEnd = args['dateEnd']
 
-        qry = PO.query.filter_by(userPOID = my_identity)
+        qry = PO.query.join(Suppliers, Suppliers.id == PO.supplierID)\
+                      .join(Packages, Packages.id == PO.packagePOID)\
+                      .join(Items, Packages.itemID == Items.id)\
+                      .filter(PO.userPOID == my_identity)
 
         # Filter by date
         if args['dateStart'] != None and args['dateEnd'] != None:
@@ -140,7 +147,7 @@ class POResources(Resource):
         rows = []
         #   get by id
         if id != None:
-            qry = qry.filter_by(id = id)
+            qry = qry.filter(PO.id == id)
 
             for row in qry.all():
                 rows.append(marshal(row, po_fields))
@@ -155,6 +162,20 @@ class POResources(Resource):
                 "PO": rows
             }, 200
         else:
+            if args['search'] is not None:
+                search = args['search']
+                # Fungsi untuk search, digunakan filter daripada filter_by 
+                # karena butuh method like dengan regex %
+                qry = qry.filter(or_(Suppliers.name.like('%'+search+'%'),\
+                                     Items.item.like('%'+search+'%') ))
+
+            if args['sort'] is not None:
+                sort = args['sort']
+                if sort == "asc":
+                    qry = qry.order_by(PO.created_at)
+                elif sort == "desc":
+                    qry = qry.order_by(desc(PO.created_at))
+
             # get all
             for row in qry.all():
                 rows.append(marshal(row, po_fields))

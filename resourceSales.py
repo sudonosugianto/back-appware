@@ -160,7 +160,6 @@ class SaleResources(Resource):
                 qry = qry.filter(or_(Category.category.like('%'+search+'%'),\
                                      Items.item.like('%'+search+'%')))
             
-            
             if args['sort'] is not None:
                 sort = args['sort']
                 if sort == "asc":
