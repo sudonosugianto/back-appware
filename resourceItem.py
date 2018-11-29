@@ -19,7 +19,7 @@ class ItemResources(Resource):
 
         my_identity = get_jwt_identity()
 
-        qry = Items.query.filter_by(userID=my_identity)
+        qry = Items.query.join(Category, Category.id == Items.catID).filter(Items.userID == my_identity)
         
         parser = reqparse.RequestParser()
         parser.add_argument("catID", type=int, location="args", help="catID must be integer")
@@ -45,7 +45,7 @@ class ItemResources(Resource):
         #                         .filter(Items.userID == my_identity).all()
 
         else:
-            qry = qry.filter_by(id=id)
+            qry = qry.filter(Items.id == id)
 
         rows = []
 

@@ -1,6 +1,7 @@
 from flask_restful import Resource, Api, reqparse, marshal, fields
 from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, jwt_required, get_jwt_claims, verify_jwt_in_request
-from sqlalchemy import desc
+from sqlalchemy import desc, between, and_
+from datetime import datetime
 
 from models import db
 ####### Tempat import Model#########
@@ -120,21 +121,38 @@ class POResources(Resource):
     def get(self,id=None):
         my_identity = get_jwt_identity()
 
-        qry = PO.query
+        parser = reqparse.RequestParser()
+        parser.add_argument("dateStart", type=str, location="args", help="Date Time must be in format YYYY-MM-DD HH:MM:SS")
+        parser.add_argument("dateEnd", type=str, location="args", help="Date Time must be in format YYYY-MM-DD HH:MM:SS")
+        args = parser.parse_args()
+
+        # dateStart = datetime.strptime(args['dateStart'], '%Y-%m-%d %H:%M:%S')
+        # dateEnd = datetime.strptime(args['dateEnd'], '%Y-%m-%d %H:%M:%S')
+        dateStart = args['dateStart']
+        dateEnd = args['dateEnd']
+
+        qry = PO.query.filter_by(userPOID = my_identity)
+
+        # Filter by date
+        if args['dateStart'] != None and args['dateEnd'] != None:
+            qry = qry.filter(and_(PO.created_at >= dateStart, PO.created_at <= dateEnd))
+
         rows = []
         #   get by id
         if id != None:
-            qry = qry.filter_by(userPOID = my_identity).filter_by(id = id)
+            qry = qry.filter_by(id = id)
 
             for row in qry.all():
                 rows.append(marshal(row, po_fields))
 
             if rows == []:
-                return {'message': 'sale not found'}, 404
+                return {'message': 'po not found'}, 404
 
             return {
                 "message": "success",
-                "sale": rows
+                "dateStart": dateStart,
+                "dateEnd": dateEnd,
+                "PO": rows
             }, 200
         else:
             # get all
@@ -146,5 +164,7 @@ class POResources(Resource):
 
             return {
                 "message": "success",
-                "sales": rows
+                "dateStart": dateStart,
+                "dateEnd": dateEnd,
+                "PO": rows
             }, 200
