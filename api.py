@@ -22,6 +22,7 @@ from resourceTransactionsSummary import TransactionsSummaryResources
 from resourcePackagesSummary import PackagesSummaryResources
 
 from resourceCatSummary import CategorySummaryResources
+from resourcePOSalesTransactions import POSalesTransactionResources
 ############## Finish Style ##################
 
 
@@ -42,6 +43,7 @@ api.add_resource(TopItemsByCatResources,"/api/user/topitemcat")
 api.add_resource(TransactionsSummaryResources, "/api/users/transactionssummary")
 api.add_resource(PackagesSummaryResources, "/api/users/packagessummary")
 api.add_resource(CategorySummaryResources, "/api/user/categorysummary")
+api.add_resource(POSalesTransactionResources, "/api/users/posalestransactions")
 
 # api.add_resource()
 

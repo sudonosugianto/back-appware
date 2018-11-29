@@ -19,7 +19,7 @@ class ItemResources(Resource):
 
         my_identity = get_jwt_identity()
 
-        qry = Items.query.join(Category, Category.id == Items.catID).filter_by(userID=my_identity)
+        qry = Items.query.join(Category, Category.id == Items.catID).filter_by(userID=my_identity).order_by(Items.item)
         
         parser = reqparse.RequestParser()
         parser.add_argument("catID", type=int, location="args", help="catID must be integer")
@@ -29,12 +29,12 @@ class ItemResources(Resource):
         if id is None :
             # by Category
             if args['catID'] is not None:
-                qry = qry.filter_by(catID = args['catID'])
+                qry = qry.filter_by(catID = args['catID']).order_by(Items.item)
 
             # by item or category
             if args['search'] is not None:
                 search = args["search"]
-                qry = qry.filter(or_(Category.category.like('%'+search+'%'),Items.item.like('%'+search+'%')))
+                qry = qry.filter(or_(Category.category.like('%'+search+'%'),Items.item.like('%'+search+'%'))).order_by(Items.item)
 
         #     # Untuk get all tanpa kategori
         #     if args['category'] is None:

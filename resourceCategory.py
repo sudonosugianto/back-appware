@@ -80,19 +80,19 @@ class CategoryResources(Resource):
                 # Fungsi untuk search, digunakan filter daripada filter_by 
                 # karena butuh method like dengan regex %
                 qry = qry.filter_by(userID=userID)\
-                                    .filter(Category.category.like('%'+search+'%'))
+                                    .filter(Category.category.like('%'+search+'%')).order_by(Category.category)
 
             if args["sort"] is not None:
                 sort = args['sort']
                 if args['orderBy']=='category':
-                    qry=qry.order_by('category %s'%(sort))
+                    qry=qry.order_by('category %s'%(sort)).order_by(Category.category)
 
             if qry is None:
                 return{"message":"Search not Found"}, 404
             
             else:
                 # Query untuk mendapatkan semua kategori
-                qry = qry.filter_by(userID=userID).all()
+                qry = qry.filter_by(userID=userID).order_by(Category.category).all()
             return {"message":"Search Result",
                     "category":marshal(qry,category_fields)}, 200
         else :
