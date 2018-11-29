@@ -61,10 +61,9 @@ class SummaryResources(Resource):
         for i in range(0,len(qryPackage)):
             packageID = qryPackage[i].id
             itemName = qryPackage[i].Items.item + ' per ' + qryPackage[i].package_name
-<<<<<<< HEAD
+
             catName = qryPackage[i].Category.category
-=======
->>>>>>> Sale Update and Sorted by date clear
+
  
             
             qry = qryPO.filter(Packages.id == packageID).all()
