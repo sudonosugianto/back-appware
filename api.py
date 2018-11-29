@@ -4,49 +4,20 @@ from configs import manager
 from configs import api
 
 ###### Tempat Untuk Import Resource #########
-
+# from resourceClient import Client
 from resourceUser import UserResources
 from resourceLogin import LoginResources
 from resourceItem import ItemResources
 from resourceCategory import CategoryResources
-from resourcePackages import PackageResources
-from resourceSuppliers import SupplierResources
-from resourceCustomers import CustomerResources
-from resourceSales import SaleResources
-from resourcePO import POResources
-from resourceActualStock import ActualStockResources
-from resourceSummary import SummaryResources
-from resourceCatByVol import CatByVolResources
-from resourceTopItemsByCategory import TopItemsByCatResources
-from resourceTransactionsSummary import TransactionsSummaryResources
-from resourcePackagesSummary import PackagesSummaryResources
-
-from resourceCatSummary import CategorySummaryResources
-from resourcePOSalesTransactions import POSalesTransactionResources
 ############## Finish Style ##################
 
 
 ######### Tempat untuk Membuat Endpoint ################
+# api.add_resource(Client, '/client/<int:id>' , '/client')
 api.add_resource(UserResources, "/api/users")
 api.add_resource(LoginResources, "/api/users/login")
-api.add_resource(ItemResources, "/api/users/item", "/api/users/item/<int:id>")
-api.add_resource(CategoryResources, "/api/users/category","/api/users/category/<int:id>")
-api.add_resource(PackageResources, "/api/users/packages","/api/users/packages/<int:id>")
-api.add_resource(SupplierResources, "/api/users/suppliers","/api/users/suppliers/<int:id>")
-api.add_resource(CustomerResources, "/api/users/customers","/api/users/customers/<int:id>")
-api.add_resource(POResources, "/api/users/po","/api/users/po/<int:id>")
-api.add_resource(SaleResources, "/api/users/sales","/api/users/sales/<int:id>")
-api.add_resource(ActualStockResources, "/api/users/actualstock","/api/users/actualstock/<int:id>")
-api.add_resource(SummaryResources, "/api/users/summary")
-api.add_resource(CatByVolResources, "/api/user/catbyvol")
-api.add_resource(TopItemsByCatResources,"/api/user/topitemcat")
-api.add_resource(TransactionsSummaryResources, "/api/users/transactionssummary")
-api.add_resource(PackagesSummaryResources, "/api/users/packagessummary")
-api.add_resource(CategorySummaryResources, "/api/user/categorysummary")
-api.add_resource(POSalesTransactionResources, "/api/users/posalestransactions")
-
-# api.add_resource()
-
+api.add_resource(ItemResources, "/api/users/item")
+api.add_resource(CategoryResources, "/api/users/category")
 ################# Finished Endpoint ################
 
 if __name__ == '__main__':
