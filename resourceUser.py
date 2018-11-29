@@ -7,11 +7,15 @@ from models import db
 from modelUsers import Users
 ####### Finish import Model#########
 
+# from configs import user_required
+
 
 ####### Tempat import Marshal#########
 from marshalField import user_fields
 ####### Finish import Marshal#########
 
+# class User(Resource):
+#     pass
 
 class UserResources(Resource):
 
@@ -30,7 +34,7 @@ class UserResources(Resource):
         qry2 = Users.query.filter_by(email=args["email"]).first()
 
         if qry1 != None or qry2 != None:
-            return {"message": "username or email has been used"}, 400
+            return {"message": "username or email has been used"}, 403
 
         add_user = Users(
             fullname = args['fullname'],
@@ -54,7 +58,7 @@ class UserResources(Resource):
 
     # untuk edit profil user
     @jwt_required
-    def put(self, id):
+    def put(self):
         parser = reqparse.RequestParser()
         parser.add_argument('fullname', type = str, help='fullname must be string type', location='json')
         parser.add_argument('username', type = str, help='username must be string type', location='json')
@@ -71,12 +75,6 @@ class UserResources(Resource):
         if qry == None :
             return {'message': 'user not found'}, 404
 
-        qry1 = Users.query.filter_by(username = args["username"]).first()
-        qry2 = Users.query.filter_by(email = args["email"]).first()        
-
-        if qry1 != None or qry2 != None:
-            return {"message": "username or email has been used"}, 400
-            
         else:
             if args["fullname"] != None:
                 qry.fullname= args["fullname"]
@@ -99,7 +97,7 @@ class UserResources(Resource):
             } ,200
 
     @jwt_required
-    def delete(self, id):
+    def delete(self):
         my_identity = get_jwt_identity()
         
         qry = Users.query.filter_by(id = my_identity).first()
