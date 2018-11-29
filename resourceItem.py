@@ -19,7 +19,7 @@ class ItemResources(Resource):
 
         my_identity = get_jwt_identity()
 
-        qry = Items.query.join(Category, Category.id == Items.catID).filter_by(userID=my_identity).order_by(Items.item)
+        qry = Items.query.join(Category, Category.id == Items.catID).filter_by(userID=my_identity)
         
         parser = reqparse.RequestParser()
         parser.add_argument("catID", type=int, location="args", help="catID must be integer")
@@ -27,6 +27,7 @@ class ItemResources(Resource):
         args = parser.parse_args()
 
         if id is None :
+            qry =qry.order_by(Items.item)
             # by Category
             if args['catID'] is not None:
                 qry = qry.filter_by(catID = args['catID']).order_by(Items.item)
@@ -45,7 +46,7 @@ class ItemResources(Resource):
         #                         .filter(Items.userID == my_identity).all()
 
         else:
-            qry = qry.filter_by(id=id)
+            qry = qry.filter(Items.id==id)
 
         rows = []
 
