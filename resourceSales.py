@@ -1,7 +1,7 @@
 from flask_restful import Resource, Api, reqparse, marshal, fields
 from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, jwt_required, get_jwt_claims, verify_jwt_in_request
 import datetime
-from sqlalchemy import desc
+from sqlalchemy import desc, and_, or_
 
 
 from models import db
@@ -9,6 +9,9 @@ from models import db
 
 ####### Tempat import Model#########
 from modelSales import Sales
+from modelCat import Category
+from modelPackages import Packages
+from modelItems import Items
 ####### Finish import Model#########
 
 
@@ -109,16 +112,67 @@ class SaleResources(Resource):
 
         my_identity = get_jwt_identity()
 
-        qry = Sales.query
+        parser = reqparse.RequestParser()
+        parser.add_argument("search", type=str, location="args", help="search must string")
+        parser.add_argument('sort',location='args',help='invalid sort',choices=('desc','asc'))
+        parser.add_argument("dateStart", type=str, location="args", help="Date Time must be in format YYYY-MM-DD HH:MM:SS")
+        parser.add_argument("dateEnd", type=str, location="args", help="Date Time must be in format YYYY-MM-DD HH:MM:SS")
+        args = parser.parse_args()
 
-        #   get by id
+        # dateStart = datetime.strptime(args['dateStart'], '%Y-%m-%d %H:%M:%S')
+        # dateEnd = datetime.strptime(args['dateEnd'], '%Y-%m-%d %H:%M:%S')
+        dateStart = args['dateStart']
+        dateEnd = args['dateEnd']
 
+        qry = Sales.query.join(Packages, Sales.packageSalesID == Packages.id)\
+                         .join(Items, Packages.itemID == Items.id)\
+                         .join(Category, Category.id == Packages.catPackageID)\
+                         .filter(Sales.userSalesID == my_identity)
+
+        # Filter by date
+        if args['dateStart'] != None and args['dateEnd'] != None:
+            qry = qry.filter(and_(Sales.created_at >= dateStart, Sales.created_at <= dateEnd))
+
+        rows = []
+        #   Get by ID
         if id != None:
-            qry = qry.filter_by(userSalesID = my_identity).filter_by(id = id)
-
-            rows = []
+            qry = qry.filter(Sales.id == id)
 
             for row in qry.all():
+                rows.append(marshal(row, sale_fields))
+
+            if rows == []:
+                return {'message': 'Sales not found'}, 404
+
+            return {
+                "message": "success",
+                "category.category":fields.String,
+                "items.item":fields.String,
+                "sales": rows
+            }, 200
+
+        else:
+
+            if args['search'] is not None:
+                search = args['search']
+                # Fungsi untuk search, digunakan filter daripada filter_by 
+                # karena butuh method like dengan regex %
+                qry = qry.filter(or_(Category.category.like('%'+search+'%'),\
+                                     Items.item.like('%'+search+'%')))
+            
+            if args['sort'] is not None:
+                sort = args['sort']
+                if sort == "asc":
+                    qry = qry.order_by(Sales.created_at)
+                elif sort == "desc":
+                    qry = qry.order_by(desc(Sales.created_at))
+
+            # get all
+            qry = qry.all()
+
+            # Info Format
+           
+            for row in (qry):
                 rows.append(marshal(row, sale_fields))
 
             if rows == []:
@@ -126,21 +180,5 @@ class SaleResources(Resource):
 
             return {
                 "message": "success",
-                "sale": rows
+                "sales": rows
             }, 200
-
-        # get all
-        qry = qry.filter_by(userSalesID = my_identity)
-
-        rows = []
-
-        for row in qry.all():
-            rows.append(marshal(row, sale_fields))
-
-        if rows == []:
-            return {'message': 'sale not found'}, 404
-
-        return {
-            "message": "success",
-            "sales": rows
-        }, 200
