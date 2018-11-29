@@ -65,7 +65,8 @@ class CategorySummaryResources(Resource):
             meanPriceProduct = grossSalePerCategory / itemSellperCategory
             profitAssets = Assets*meanPriceProduct
             margin = grossSalePerCategory - modalPerCategory
-            tmp = {catName:{
+            tmp = {
+                    "category": catName,
                     "items Stock":itemPOPerCategory,
                     "items Sold": itemSellperCategory,
                     "Assets":Assets,
@@ -74,7 +75,7 @@ class CategorySummaryResources(Resource):
                     "GSPC": grossSalePerCategory,
                     "MPP": ceil(meanPriceProduct),
                     "profitAssets": ceil(profitAssets)
-                    }}
+                    }
             
             summary.append(tmp)
         
