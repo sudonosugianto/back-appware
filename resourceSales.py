@@ -160,10 +160,6 @@ class SaleResources(Resource):
                 qry = qry.filter(or_(Category.category.like('%'+search+'%'),\
                                      Items.item.like('%'+search+'%')))
             
-<<<<<<< HEAD
-=======
-            
->>>>>>> Sale Update and Sorted by date clear
             if args['sort'] is not None:
                 sort = args['sort']
                 if sort == "asc":
