@@ -33,14 +33,14 @@ class TopItemsByCatResources(Resource):
         my_identity = get_jwt_identity()
         # Get Category per user
         qryCategory = Category.query.filter_by(userID = my_identity).all()
-        qryPackage = Packages.query.filter_by(userPackageID = my_identity).all()
 
         for i in range(0,len(qryCategory)):
             catID = qryCategory[i].id
             catName = qryCategory[i].category
 
-            TopItemAll = []
-            tmp = { catName : TopItemAll}
+            tmp = { "title" : catName,
+                    "labels":[],
+                    "data":[]}
             
             # query Item Berdasarkan  Kategori
             qryItems = Items.query.filter_by( userID = my_identity).filter_by(catID = catID).all()
@@ -63,9 +63,13 @@ class TopItemsByCatResources(Resource):
                     jumlahSaleperPackage += qrySale[k].quantity
                 # End of Perhitungan Jumlah Sales per Package #############
 
-                TopItemAll.append({"itemID":itemID,"name":itemName,\
-                                    "packageID":packageID,"packageName":packageName,
-                                    "totalItem":jumlahSaleperPackage})
+                # TopItemAll.append({"itemID":itemID,"name":itemName,\
+                #                     "packageID":packageID,"packageName":packageName,
+                #                     "totalItem":jumlahSaleperPackage})
+
+                tmp['labels'].append(itemName)
+                tmp['data'].append(jumlahSaleperPackage)
+            
             TopItemCatAll.append(tmp)
 
         # print(TopItemAll)
