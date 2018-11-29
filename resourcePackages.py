@@ -104,7 +104,7 @@ class PackageResources(Resource):
         #   get by id
 
         if id != None:
-            qry = qry.filter_by(id = id)
+            qry = qry.filter(Packages.id == id)
 
             rows = []
 
