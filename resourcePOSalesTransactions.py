@@ -44,16 +44,18 @@ class POSalesTransactionResources(Resource):
         listDataPO = []
         dictDataPO = {}
         for item in dataPO.all():
-            dictDataPO["datetime"] = item.created_at
-            dictDataPO["packageName"] = Packages.package_name
+            dictDataPO["datetime"] = str(item.created_at)
+            # dictDataPO["packageName"] = Packages.query.filter(Packages.id == PO.packagePOID)["package_name"]
+            # dictDataPO["quantity"] = item.quantity
+            
 
             listDataPO.append(dictDataPO)
             dictDataPO = {}
-
-        listDataSales = []
-        for item in dataSales.all():
-            listDataSales.append(marshal(item, sale_fields))
+            
+        # listDataSales = []
+        # for item in dataSales.all():
+        #     listDataSales.append(marshal(item, sale_fields))
         return {
             "dataPO": listDataPO,
-            "dataSales": listDataSales
+            # "dataSales": listDataSales
         }, 200
