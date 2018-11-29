@@ -7,8 +7,8 @@ user_fields = {
     "email": fields.String,
     "phone_number": fields.String,
     "status":fields.Boolean,
-    "created_at": fields.String,
-    "updated_at": fields.String
+    "created_at": fields.DateTime(dt_format='rfc822'),
+    "updated_at": fields.DateTime(dt_format='rfc822')
 }
 
 item_fields = {
@@ -22,8 +22,8 @@ item_fields = {
     "unit":fields.String,
     "SKU":fields.Integer,
     "status":fields.Boolean,
-    "created_at": fields.String,
-    "updated_at": fields.String
+    "created_at": fields.DateTime(dt_format='rfc822'),
+    "updated_at": fields.DateTime(dt_format='rfc822')
 }
 
 category_fields = {
@@ -31,8 +31,8 @@ category_fields = {
     "userID":fields.Integer,
     "category": fields.String,
     "status":fields.Boolean,
-    "created_at": fields.String,
-    "updated_at": fields.String
+    "created_at": fields.DateTime(dt_format='rfc822'),
+    "updated_at": fields.DateTime(dt_format='rfc822')
 }
 
 package_fields = {
@@ -59,8 +59,8 @@ supplier_fields = {
     "city" : fields.String,
     "state" : fields.String,
     "zipcode" : fields.String,
-    "created_at": fields.String,
-    "updated_at": fields.String
+    "created_at": fields.DateTime(dt_format='rfc822'),
+    "updated_at": fields.DateTime(dt_format='rfc822')
 }
 
 customer_fields = {
@@ -88,8 +88,8 @@ po_fields = {
     "totalPrice": fields.Float,
     "notes" : fields.String,
     "status":fields.Boolean,
-    "created_at": fields.String,
-    "updated_at": fields.String
+    "created_at": fields.DateTime(dt_format='rfc822'),
+    "updated_at": fields.DateTime(dt_format='rfc822')
 }
 
 sale_fields = {
@@ -103,8 +103,8 @@ sale_fields = {
     "sellingPricePerPackage": fields.Float,
     "totalPrice":fields.Float,
     "status": fields.Boolean,
-    "created_at": fields.String,
-    "updated_at": fields.String
+    "created_at": fields.DateTime(dt_format='rfc822'),
+    "updated_at": fields.DateTime(dt_format='rfc822')
 }
 
 actualstock_fields = {
@@ -114,7 +114,7 @@ actualstock_fields = {
     "actual_stock": fields.Integer,
     "notes": fields.String,
     "status": fields.Boolean,
-    "created_at": fields.String,
-    "updated_at": fields.String
+    "created_at": fields.DateTime(dt_format='rfc822'),
+    "updated_at": fields.DateTime(dt_format='rfc822')
 }
 
