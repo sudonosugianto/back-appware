@@ -31,6 +31,7 @@ class SummaryResources(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument("dateStart", type=str, location="args", help="Date Time must be in format YYYY-MM-DD HH:MM:SS")
         parser.add_argument("dateEnd", type=str, location="args", help="Date Time must be in format YYYY-MM-DD HH:MM:SS")
+        parser.add_argument("search", type=str, location="args", help="search must string")
         args = parser.parse_args()
 
         # dateInput = datetime.strptime(args['date'], '%Y-%m-%d %H:%M:%S')
@@ -38,7 +39,8 @@ class SummaryResources(Resource):
         dateStart = args['dateStart']
         dateEnd = args['dateEnd']
         
-        qryPackage = Packages.query.filter_by(userPackageID = my_identity).all()
+        qryPackage = Packages.query.join(Items, Packages.itemID == Items.id)\
+                                   .filter(Packages.userPackageID == my_identity)
         qryPO = PO.query.join(Packages, PO.packagePOID == Packages.id).filter(PO.userPOID == my_identity)
         qrySales= Sales.query.join(Packages, Sales.packageSalesID == Packages.id).filter(Sales.userSalesID == my_identity)
         qryActualStock = ActualStock.query.filter(ActualStock.userActualStocksID == my_identity)
@@ -48,9 +50,18 @@ class SummaryResources(Resource):
             qryPO = qryPO.filter(and_(PO.created_at >= dateStart, PO.created_at <= dateEnd))
             qrySales = qrySales.filter(and_(Sales.created_at >= dateStart, Sales.created_at <= dateEnd))
 
+        # Fitur untuk Search
+        if args['search'] is not None:
+            search = args['search']
+            qryPackage = qryPackage.filter(or_(Packages.package_name.like("%"+search+"%"),\
+                                               Items.item.like("%"+search+"%"))).all()
+        else:
+            qryPackage = qryPackage.all()
+        
         for i in range(0,len(qryPackage)):
             packageID = qryPackage[i].id
-            itemName = qryPackage[i].Items.item + ' ' + qryPackage[i].package_name
+            itemName = qryPackage[i].Items.item + ' per ' + qryPackage[i].package_name
+            catName = qryPackage[i].Category.category
  
             
             qry = qryPO.filter(Packages.id == packageID).all()
@@ -82,10 +93,10 @@ class SummaryResources(Resource):
             
             tmp = { "message":"Summary per Item Package", 
                 "Package": itemName,
+                "Category": catName,
                 "POQuantity": totalPO,
                 "SalesQuantity": totalSales,
                 "Adjusment": Adjusment,
-                # "ActualStock": totalActual,
                 "Ending":Ending}
 
             summary.append(tmp) 
