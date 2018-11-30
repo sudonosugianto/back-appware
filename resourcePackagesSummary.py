@@ -2,7 +2,7 @@
 from flask_restful import Resource, Api, reqparse, marshal, fields
 from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, jwt_required, get_jwt_claims, verify_jwt_in_request
 import datetime
-from sqlalchemy import or_, func, desc
+from sqlalchemy import or_, func, desc, and_
 from datetime import datetime, timedelta
 from math import ceil
 
@@ -78,7 +78,7 @@ class PackagesSummaryResources(Resource):
     @jwt_required
     def get(self):
         my_identity = get_jwt_identity()
-        dataPackages = Packages.query.filter_by(userPackageID=my_identity)
+        dataPackages = Packages.query.filter_by(userPackageID=my_identity).order_by(Packages.package_name)
         dataSales = Sales.query.filter_by(userSalesID=my_identity)
         dataPO = PO.query.filter_by(userPOID=my_identity)
         idPackages = []
@@ -91,6 +91,8 @@ class PackagesSummaryResources(Resource):
         for i in range (0, len(idPackages)):
             packageDetail["packageID"] = idPackages[i]
             packageDetail["packageName"] = namePackages[i]
+            packageDetail["itemName"] = Items.query.filter(Items.id==Packages.itemID).first().item
+            packageDetail["categoryName"] = Category.query.filter(Category.id==Packages.catPackageID).first().category
             packageDetail["packageSold"] = self.getSoldPackages(idPackages[i], dataSales)
             packageDetail["netSales"] = ceil(self.getTotalSalesPackages(idPackages[i], dataSales))
             packageDetail["profit"] = ceil(self.getProfit(idPackages[i], dataPO, dataSales))
