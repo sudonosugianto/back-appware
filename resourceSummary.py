@@ -20,7 +20,6 @@ from marshalField import sale_fields
 from marshalField import po_fields, actualstock_fields
 ####### Finish import Marshal#########
 
-
 class SummaryResources(Resource):
     # Untuk menampilkan summary
     @jwt_required
@@ -66,7 +65,8 @@ class SummaryResources(Resource):
             
             qry = qryPO.filter(Packages.id == packageID).all()
             qrySale = qrySales.filter(Packages.id == packageID).all()
-            qryActual = qryActualStock.filter(ActualStock.packageActualStocksID == packageID).all()
+            qryActual = qryActualStock.filter(ActualStock.packageActualStocksID == packageID)\
+                                      .order_by(desc(ActualStock.created_at)).first()
 
             #########  Start Perhitungan Total PO per Packages #########
             totalPO = 0
@@ -80,26 +80,25 @@ class SummaryResources(Resource):
             #########  End of Perhitungan Total PO per Packages #########
             
             #########  Start Perhitungan Actual Stock per Packages #########
-            if qryActual != []:
-                totalActual = 0
-                for j in range(0,len(qryActual)):
-                    totalActual += qryActual[j].actual_stock
+            if qryActual is not None:
+                totalActual = qryActual.actual_stock
             else:
                 totalActual = totalPO - totalSales
             #########  End of Perhitungan Actual Stock per Packages #########
             
-            Ending = totalPO - totalSales
-            Adjusment = Ending - totalActual
-            
+            teori = totalPO - totalSales
+            adjusment = totalActual - teori
+
+
             tmp = { "message":"Summary per Item Package", 
                 "Package": itemName,
                 "Category": catName,
                 "POQuantity": totalPO,
-                "SalesQuantity": totalSales,
-                "Adjusment": Adjusment,
-                "Ending":Ending}
-
+                "salesQuantity": totalSales,
+                "stock": teori,
+                "adjusment": adjusment,
+                "actualStock": totalActual
+                }
             summary.append(tmp) 
             
-        
         return summary
