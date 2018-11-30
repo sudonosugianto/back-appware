@@ -91,8 +91,12 @@ class PackagesSummaryResources(Resource):
         for i in range (0, len(idPackages)):
             packageDetail["packageID"] = idPackages[i]
             packageDetail["packageName"] = namePackages[i]
-            packageDetail["itemName"] = Items.query.filter(Items.id==Packages.itemID).first().item
-            packageDetail["categoryName"] = Category.query.filter(Category.id==Packages.catPackageID).first().category
+            
+            qry = Packages.query.filter_by(id = idPackages[i]).first()
+            catID = qry.catPackageID
+            itemID = qry.itemID
+            packageDetail["itemName"] = Items.query.filter_by(id = itemID).first().item
+            packageDetail["categoryName"] = Category.query.filter_by(id = catID).first().category
             packageDetail["packageSold"] = self.getSoldPackages(idPackages[i], dataSales)
             packageDetail["netSales"] = ceil(self.getTotalSalesPackages(idPackages[i], dataSales))
             packageDetail["profit"] = ceil(self.getProfit(idPackages[i], dataPO, dataSales))
