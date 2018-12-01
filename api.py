@@ -24,11 +24,18 @@ from resourcePackagesSummary import PackagesSummaryResources
 from resourceCatSummary import CategorySummaryResources
 from resourcePOSalesTransactions import POSalesTransactionResources
 from resourceSubusers import SubuserResources
-############## Finish Style ##################
+
+# Import resource untuk api subusers
+from resourceSubuserCatSummary import SubuserCategorySummaryResources
+from resourceSubuserSummary import SubuserSummaryResources
+from resourceSubuserPackagesSummary import SubuserPackagesSummaryResources
+
+
+############## Finish import resources ##################
 
 
 ######### Tempat untuk Membuat Endpoint ################
-api.add_resource(UserResources, "/api/users")
+api.add_resource(UserResources, "/api/users", "/api/users/<int:id>")
 api.add_resource(LoginResources, "/api/users/login")
 api.add_resource(ItemResources, "/api/users/item", "/api/users/item/<int:id>")
 api.add_resource(CategoryResources, "/api/users/category","/api/users/category/<int:id>")
@@ -47,7 +54,10 @@ api.add_resource(CategorySummaryResources, "/api/user/categorysummary")
 api.add_resource(POSalesTransactionResources, "/api/users/posalestransactions")
 api.add_resource(SubuserResources, "/api/users/subusers")
 
-# api.add_resource()
+# Endpoint untuk api subusers
+api.add_resource(SubuserCategorySummaryResources, "/api/subuser/summary/category")
+api.add_resource(SubuserSummaryResources, "/api/subuser/summary")
+api.add_resource(SubuserPackagesSummaryResources, "/api/subuser/summary/packages")
 
 ################# Finished Endpoint ################
 

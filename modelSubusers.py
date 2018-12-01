@@ -6,9 +6,9 @@ class Subusers(db.Model):
     userID = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'),nullable=False)
     # field
     fullname = db.Column(db.String(50))
-    email = db.Column(db.String(50))
-    username = db.Column(db.String(50), nullable=False)
-    apiKey = db.Column(db.String(1000), nullable=False)
+    email = db.Column(db.String(50), nullable=False, unique=True)
+    username = db.Column(db.String(50))
+    apiKey = db.Column(db.String(100), nullable=False)
     phone_number = db.Column(db.String(50))
     subuser_type = db.Column(db.String(50))
     status = db.Column(db.Boolean, default=1)

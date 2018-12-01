@@ -25,7 +25,6 @@ class SubuserResources(Resource):
         parser.add_argument("fullname", type=str, location="json", required=True, help="fullname must be string and exist")
         parser.add_argument("email", type=str, location="json", required=True, help="email must be string and exist")
         parser.add_argument("username", type=str, location="json", required=True, help="username must be string and exist")
-        # parser.add_argument("apiKey", type=str, location="json", required=True, help="password must be string and exist")
         parser.add_argument("phone_number", type=str, location="json", required=True, help="phone_number must be string")
         parser.add_argument("subuser_type", type=str, location="json", required=True, help="subuser_type must be string")
         args = parser.parse_args()
