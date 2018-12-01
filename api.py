@@ -31,7 +31,7 @@ from resourceSubusers import SubuserResources
 from resourceSubuserCatSummary import SubuserCategorySummaryResources
 from resourceSubuserSummary import SubuserSummaryResources
 from resourceSubuserPackagesSummary import SubuserPackagesSummaryResources
-
+from resourceSubuserPackagesTrack import SubuserPackageTrackDetail
 
 ############## Finish import resources ##################
 
@@ -62,6 +62,7 @@ api.add_resource(PackageTrackDetail, "/api/users/track")
 api.add_resource(SubuserCategorySummaryResources, "/api/subuser/summary/category")
 api.add_resource(SubuserSummaryResources, "/api/subuser/summary")
 api.add_resource(SubuserPackagesSummaryResources, "/api/subuser/summary/packages")
+api.add_resource(SubuserPackagesSummaryResources, "/api/subuser/packages/track")
 
 ################# Finished Endpoint ################
 

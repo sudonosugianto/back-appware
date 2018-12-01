@@ -10,6 +10,7 @@ from modelItems import Items
 from modelPO import PO
 from modelSales import Sales
 from modelPackagesTrack import PackagesTrack
+from modelSubusers import Subusers
 ####### Finish import Model#########
 
 
@@ -25,12 +26,14 @@ class PackageTrackDetail(Resource):
         # Filter by user => Filter by package => Filter_by PO
         my_identity = get_jwt_identity()
         parser = reqparse.RequestParser()
+        parser.add_argument("email", type=str, location="args", required=True, help="email must be string and exist")
+        parser.add_argument("apiKey", type=str, location="args", required=True, help="apiKey must be string and exist")
         parser.add_argument('code', type = str, help='code must be Integer', location ='args',required=True)
         args = parser.parse_args()
-
+        
         qry = PackagesTrack.query.join(PO, PO.id == PackagesTrack.POID)\
-                                 .filter(PO.userPOID == my_identity)\
-                                 .filter(PackagesTrack.code == args['code']).first()
+                                .filter(PO.userPOID == my_identity)\
+                                .filter(PackagesTrack.code == args['code']).first()
         
         if qry is None:
             return {"message":"Items / Package not Found or maybe it has been sold"} , 404
@@ -70,6 +73,5 @@ class PackageTrackDetail(Resource):
 
             return  marshal(qry, detailPackageField), 200
 
-        
 
 
