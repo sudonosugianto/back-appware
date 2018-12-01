@@ -23,6 +23,7 @@ from resourcePackagesSummary import PackagesSummaryResources
 
 from resourceCatSummary import CategorySummaryResources
 from resourcePOSalesTransactions import POSalesTransactionResources
+from resourceSubusers import SubuserResources
 ############## Finish Style ##################
 
 
@@ -44,6 +45,7 @@ api.add_resource(TransactionsSummaryResources, "/api/users/transactionssummary")
 api.add_resource(PackagesSummaryResources, "/api/users/packagessummary")
 api.add_resource(CategorySummaryResources, "/api/user/categorysummary")
 api.add_resource(POSalesTransactionResources, "/api/users/posalestransactions")
+api.add_resource(SubuserResources, "/api/users/subusers")
 
 # api.add_resource()
 

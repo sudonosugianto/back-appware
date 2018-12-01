@@ -60,7 +60,7 @@ class UserResources(Resource):
         parser.add_argument('username', type = str, help='username must be string type', location='json')
         parser.add_argument('password', type = str, help='password must be string type', location='json')
         parser.add_argument('email', type = str, help='email must be string type', location='json')
-        parser.add_argument('phone_number', type = int, help='phone_number status must be string type',location='json')
+        parser.add_argument('phone_number', type = str, help='phone_number status must be string type',location='json')
 
         args = parser.parse_args()
 
