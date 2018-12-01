@@ -33,6 +33,10 @@ class TopItemsByCatResources(Resource):
         my_identity = get_jwt_identity()
         # Get Category per user
         qryCategory = Category.query.filter_by(userID = my_identity).all()
+        
+        if qryCategory is None:
+            return {"message":"This user doen\'t have Category to be analysis "}
+        
 
         for i in range(0,len(qryCategory)):
             catID = qryCategory[i].id
@@ -51,6 +55,9 @@ class TopItemsByCatResources(Resource):
                 
                 # query Item Package Berdasarkan  Kategori
                 qryItemsPack = Packages.query.filter_by(itemID = itemID).first()
+                
+                if qryItemsPack is None:
+                    return {"message":"Theres is items id that doesn\'t have packages"}, 404
                 
                 packageID = qryItemsPack.id
                 packageName = qryItemsPack.package_name
