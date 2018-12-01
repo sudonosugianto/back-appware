@@ -93,7 +93,6 @@ class PackagesSummaryResources(Resource):
             packageDetail["packageID"] = idPackages[i]
             
             packageDetail["packageName"] = namePackages[i]
-            
             qry = Packages.query.filter_by(id = idPackages[i]).first()
             catID = qry.catPackageID
             itemID = qry.itemID
@@ -102,9 +101,10 @@ class PackagesSummaryResources(Resource):
             packageDetail["packageSold"] = self.getSoldPackages(idPackages[i], dataSales)
             packageDetail["netSales"] = ceil(self.getTotalSalesPackages(idPackages[i], dataSales))
             packageDetail["profit"] = ceil(self.getProfit(idPackages[i], dataPO, dataSales))
+            # packageDetail["packagePO"] = self.getProfit(idPackages[i], dataPO, dataSales)[2]
 
             listPackageDetail.append(packageDetail)
             packageDetail = {}
 
 
-        return listPackageDetail
+        return listPackageDetail, 200

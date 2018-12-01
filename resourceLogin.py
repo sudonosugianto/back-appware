@@ -17,7 +17,7 @@ from marshalField import user_fields
 
 class LoginResources(Resource):
 
-    # Untuk register user
+    # Untuk login user
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("email", type=str, location="json", required=True, help="email must be string and exist")

@@ -134,3 +134,17 @@ packagetrack_fields = {
     "created_at": fields.DateTime(dt_format='rfc822'),
     "updated_at": fields.DateTime(dt_format='rfc822')
 }
+
+subuser_fields = {
+    "id": fields.Integer,
+    "userID": fields.Integer,
+    "fullname": fields.String,
+    "email": fields.String,
+    "username": fields.String,
+    "apiKey": fields.String,
+    "phone_number": fields.String,
+    "subuser_type": fields.String,
+    "status": fields.Boolean,
+    "created_at": fields.String,
+    "updated_at": fields.String
+}
