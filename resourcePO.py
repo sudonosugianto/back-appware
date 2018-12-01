@@ -10,13 +10,48 @@ from modelSuppliers import Suppliers
 from modelPackages import Packages
 from modelCat import Category
 from modelItems import Items
+from modelSales import Sales
+from modelPackagesTrack import PackagesTrack
 ####### Finish import Model#########
 
 ####### Tempat import Model#########
+from marshalField import packagetrack_fields
 from marshalField import po_fields
 ####### Finish import Model#########
 
 class POResources(Resource):
+    # Untuk Create Track Package 
+    @jwt_required
+    def packageTrack(self, POID):
+        # Post untuk barang Masuk
+        my_identity = get_jwt_identity()
+
+        packageID = PO.query.filter_by(id = POID).first().packagePOID
+        qtyIn = PO.query.filter_by(id = POID).first().quantity
+        
+        # Initiate Data PO sebelum pembuatan Code
+        for i in range(0,qtyIn):
+            add_packagestrack = PackagesTrack(
+                POID = POID,
+                packageID = packageID,
+                status = True
+            )
+            
+            db.session.add(add_packagestrack)
+            db.session.commit()
+
+        # Pemasangan Code Tracking
+        trackID = PackagesTrack.query.filter_by(POID = POID).all()
+        listTrack = []
+        for item in trackID:
+            item.code = str(item.packageID) + "-PO-" +str(item.POID)+"-"+str(item.id)+"-T"
+            db.session.commit()
+
+            # Return list kode tiap barang
+            listTrack.append(item.code)
+
+        return listTrack
+
     # Untuk Create Item
     @jwt_required
     def post(self):
@@ -64,8 +99,12 @@ class POResources(Resource):
         # qry untuk mendapatkan post PO terakhir oleh user
         qry = PO.query.filter_by(userPOID=my_identity).order_by(desc(PO.created_at)).first()
 
+        # Fungsi untuk menambahkan detail barang Masuk
+        track = self.packageTrack(qry.id)
+        
         return {
             "message": "Add PO Success",
+            "IdMasuk": track,
             "PO": marshal(qry, po_fields)
         } ,200
 
