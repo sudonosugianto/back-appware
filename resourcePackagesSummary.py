@@ -1,4 +1,3 @@
-
 from flask_restful import Resource, Api, reqparse, marshal, fields
 from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, jwt_required, get_jwt_claims, verify_jwt_in_request
 import datetime
@@ -86,12 +85,14 @@ class PackagesSummaryResources(Resource):
         for item in dataPackages.all():
             idPackages.append(item.id)
             namePackages.append(item.package_name)
+
+        # return namePackages
         listPackageDetail = []
         packageDetail = {}
         for i in range (0, len(idPackages)):
             packageDetail["packageID"] = idPackages[i]
-            packageDetail["packageName"] = namePackages[i]
             
+            packageDetail["packageName"] = namePackages[i]
             qry = Packages.query.filter_by(id = idPackages[i]).first()
             catID = qry.catPackageID
             itemID = qry.itemID
@@ -100,9 +101,10 @@ class PackagesSummaryResources(Resource):
             packageDetail["packageSold"] = self.getSoldPackages(idPackages[i], dataSales)
             packageDetail["netSales"] = ceil(self.getTotalSalesPackages(idPackages[i], dataSales))
             packageDetail["profit"] = ceil(self.getProfit(idPackages[i], dataPO, dataSales))
+            # packageDetail["packagePO"] = self.getProfit(idPackages[i], dataPO, dataSales)[2]
 
             listPackageDetail.append(packageDetail)
             packageDetail = {}
 
 
-        return listPackageDetail
+        return listPackageDetail, 200

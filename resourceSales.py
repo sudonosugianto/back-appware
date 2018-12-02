@@ -11,16 +11,38 @@ from models import db
 from modelSales import Sales
 from modelCat import Category
 from modelPackages import Packages
+from modelPackagesTrack import PackagesTrack
 from modelItems import Items
 ####### Finish import Model#########
 
 
 ####### Tempat import Marshal#########
 from marshalField import sale_fields
+from marshalField import packagetrack_fields
 ####### Finish import Marshal#########
 
 
 class SaleResources(Resource):
+    @jwt_required
+    def Out(self,packageID,saleID,saleQty):
+        my_identity = get_jwt_identity()
+        qryGoSale = PackagesTrack.query.join(Packages, PackagesTrack.packageID == Packages.id)\
+                             .filter(Packages.userPackageID == my_identity)\
+                             .filter(PackagesTrack.packageID == packageID)\
+                             .filter(PackagesTrack.status == True).all()
+
+        # Generate Barang yang akan keluar 
+        listTrack = []
+        for i in range(0,saleQty):
+            qryGoSale[i].salesID = saleID
+            qryGoSale[i].status = False
+            changeStatus = list(qryGoSale[i].code)
+            changeStatus[-1:] ="F"
+            qryGoSale[i].code = "".join(changeStatus)
+            qryGoSale[i].updated_at = db.func.current_timestamp()
+            db.session.commit()
+            listTrack.append(qryGoSale[i].code)
+        return listTrack
 
     # Untuk tambah Sale
     @jwt_required
@@ -31,9 +53,22 @@ class SaleResources(Resource):
         parser.add_argument("quantity", type=int, location="json", required=True, help="quantity must be integer and exist")
         parser.add_argument("sellingPricePerPackage", type=float, location="json", required=True, help="sellingPrice must be float and exist")
         args = parser.parse_args()
-
         my_identity = get_jwt_identity()
-
+        
+        ############### Start of Check Maksimal Sales ################################
+        qryGoSale = PackagesTrack.query.join(Packages, PackagesTrack.packageID == Packages.id)\
+                             .filter(Packages.userPackageID == my_identity)\
+                             .filter(PackagesTrack.packageID == args['packageSalesID'])\
+                             .filter(PackagesTrack.status == True).all()
+        totalItem = len(qryGoSale)
+        print(totalItem)
+        # return {"message":totalItem,
+        #         "Item sah":marshal(qryGoSale, packagetrack_fields)}
+        if args['quantity'] >  totalItem:
+            return {"message":"You can't Sale Item more than of your Stock"}
+        
+        ################# End of Check Maksimal Sales ####################################
+        
         # Total Sale
         totalPrice = float(args['quantity'])*args['sellingPricePerPackage']
 
@@ -49,12 +84,16 @@ class SaleResources(Resource):
         db.session.add(add_sale)
         db.session.commit()
         
-        # qry untuk mendapatkan post PO terakhir oleh user
+        # qry untuk mendapatkan post Sales terakhir oleh user
         qry = Sales.query.filter_by(userSalesID=my_identity).order_by(desc(Sales.created_at)).first()
 
+        listTrack = self.Out(args['packageSalesID'],qry.id,args['quantity'])
+        # 
         return {
             "message": "add sale success",
-            "customer": marshal(add_sale, sale_fields)
+            "IdKeluar": listTrack,
+            "customer": marshal(add_sale, sale_fields),
+            "sales": marshal(qry, sale_fields)
         }, 200
 
     # untuk edit sale

@@ -15,6 +15,7 @@ class Users(db.Model):
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     # relationship
+    subusers = db.relationship("Subusers", backref="users", lazy=True)
     Items = db.relationship('Items', backref='users', lazy=True)
     packages =  db.relationship('Packages', backref='Users', lazy=True)
     suppliers = db.relationship('Suppliers',backref='Users', lazy=True)
