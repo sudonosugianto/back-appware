@@ -36,11 +36,14 @@ class PackageTrackDetail(Resource):
                 "packages.Items.item":fields.String,
                 "packages.id": fields.Integer,
                 "packages.package_name": fields.String,
+                "packages.items_quantity": fields.Integer,
                 "po.id":fields.Integer,
                 "po.suppliers.name":fields.String,
+                "po.suppliers.address":fields.String,
                 "po.quantity":fields.String,
                 "sales.id":fields.Integer,
                 "sales.customers.fullname":fields.String,
+                "sales.customers.address":fields.String,
                 "sales.quantity":fields.String,
                 "created_at":fields.DateTime(dt_format='rfc822'),
                 "updated_at":fields.DateTime(dt_format='rfc822')
@@ -68,12 +71,14 @@ class PackageTrackDetail(Resource):
                 detailPackageField = {
                     "id":fields.Integer,
                     "code": fields.String,
-                    "packages.Items.id": fields.Integer,
+                    "packages.Items.id":fields.Integer,
                     "packages.Items.item":fields.String,
                     "packages.id": fields.Integer,
                     "packages.package_name": fields.String,
-                    "po.id":fields.String,
+                    "packages.items_quantity": fields.Integer,
+                    "po.id":fields.Integer,
                     "po.suppliers.name":fields.String,
+                    "po.suppliers.address":fields.String,
                     "po.quantity":fields.String,
                     # "sales.id":fields.Integer,
                     # "sales.customers.fullname":fields.String,
@@ -84,22 +89,6 @@ class PackageTrackDetail(Resource):
                 return  marshal(qry, detailPackageField),200
             
             elif qry.status == False:
-                detailPackageField = {
-                    "id":fields.Integer,
-                    "code": fields.String,
-                    "packages.Items.id":fields.Integer,
-                    "packages.Items.item":fields.String,
-                    "packages.id": fields.Integer,
-                    "packages.package_name": fields.String,
-                    "po.id":fields.Integer,
-                    "po.suppliers.name":fields.String,
-                    "po.quantity":fields.String,
-                    "sales.id":fields.Integer,
-                    "sales.customers.fullname":fields.String,
-                    "sales.quantity":fields.String,
-                    "created_at":fields.DateTime(dt_format='rfc822'),
-                    "updated_at":fields.DateTime(dt_format='rfc822')
-                }
 
                 return  marshal(qry, detailPackageField), 200
             
