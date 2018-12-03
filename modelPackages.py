@@ -18,5 +18,7 @@ class Packages(db.Model):
     ActualStock = db.relationship('ActualStock', backref='packages', lazy=True)
     PO = db.relationship('PO', backref='packages', lazy=True)
     Sale = db.relationship('Sales', backref='packages', lazy=True)
+    PackageTrack = db.relationship("PackagesTrack", backref="packages", lazy=True)
+
     def __repr__(self):
         return "<Packages %r>" % self.id

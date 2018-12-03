@@ -15,6 +15,9 @@ class PO(db.Model):
     created_at = db.Column(db.DateTime, default= db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default= db.func.current_timestamp())
 
+    # backref
+    PackageTrack = db.relationship("PackagesTrack", backref="po", lazy=True)
+
     def __repr__(self):
         return "<PO %r>" % self.id
 
