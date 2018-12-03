@@ -83,7 +83,7 @@ class UserResources(Resource):
             if args["username"] != None:
                 qry.username= args["username"]
             if args["password"] != None:
-                qry.password= args["password"]
+                qry.password= generate_password_hash(args["password"]),
             if args["email"] != None:
                 qry.email= args["email"]
             if args["phone_number"] != None:

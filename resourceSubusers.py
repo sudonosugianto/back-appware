@@ -50,7 +50,7 @@ class SubuserResources(Resource):
         return {
             "message": "add subuser success",
             "token": token,
-            "user": marshal(add_subuser, subuser_fields)
+            "subuser": marshal(add_subuser, subuser_fields)
         }, 200
 
 
@@ -73,3 +73,59 @@ class SubuserResources(Resource):
             "message": "success",
             "subuser": rows
         }, 200
+
+
+    # untuk edit subuser
+    @jwt_required
+    def put(self, id):
+        parser = reqparse.RequestParser()
+        parser.add_argument('fullname', type = str, help='fullname must be string type', location='json')
+        parser.add_argument('email', type = str, help='email must be string type', location='json')
+        parser.add_argument('username', type = str, help='username must be string type', location='json')
+        parser.add_argument('phone_number', type = str, help='phone_number must be string type', location='json')
+        parser.add_argument('subuser_type', type = str, help='subuser_type must be string type', location='json')
+        args = parser.parse_args()
+        
+        qry = Subusers.query.filter_by(id = id).first()
+
+        concate = StringGenerator('[a-zA-Z0-9_]').render_list(32,unique=True)
+        
+        if qry == None :
+            return {'message': 'subusers not found'}, 404
+
+        else:
+            if args["fullname"] != None:
+                qry.fullname= args["fullname"]
+            if args["email"] != None:
+                qry.email= args["email"]
+            if args["username"] != None:
+                qry.username= args["username"]
+            if args["phone_number"] != None:
+                qry.phone_number= args["phone_number"]
+            if args["subuser_type"] != None:
+                qry.subuser_type= args["subuser_type"]
+
+            qry.apiKey = ''.join(concate)
+            qry.updated_at = db.func.current_timestamp()
+                    
+            db.session.add(qry)
+            db.session.commit()
+
+            return {
+                "message": "edit subuser success",
+                "subuser": marshal(qry, subuser_fields)
+            } ,200
+
+    # Untuk hapus subuser
+    @jwt_required
+    def delete(self, id):
+        
+        qry = Subusers.query.filter_by(id = id).first()
+
+        if qry == None:
+            return {'message': "subuser not found!"}, 404
+
+        db.session.delete(qry)
+        db.session.commit()
+
+        return {'message': "delete subuser success"}, 200
