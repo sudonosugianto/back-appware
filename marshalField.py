@@ -116,6 +116,8 @@ actualstock_fields = {
     "userActualStocksID": fields.Integer,
     "packageActualStocksID": fields.Integer,
     "actual_stock": fields.Integer,
+    "packages.package_name": fields.String,
+    "packages.Items.item":fields.String,
     "notes": fields.String,
     "status": fields.Boolean,
     "created_at": fields.DateTime(dt_format='rfc822'),
