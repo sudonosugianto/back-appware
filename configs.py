@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_jwt_extended import JWTManager, verify_jwt_in_request, get_jwt_claims
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
@@ -40,3 +40,9 @@ def add_claims(identity) :
 @jwt.unauthorized_loader
 def unathorized_message(error_string):
     return json.dumps({'message': error_string}), 401, {'Content-Type': 'application/json'}
+
+# Page Untuk Halaman Home
+
+@app.route("/")
+def webprint():
+    return render_template('index.html')

@@ -54,13 +54,13 @@ api.add_resource(TransactionsSummaryResources, "/api/users/transactionssummary")
 api.add_resource(PackagesSummaryResources, "/api/users/packagessummary")
 api.add_resource(CategorySummaryResources, "/api/user/categorysummary")
 api.add_resource(POSalesTransactionResources, "/api/users/posalestransactions")
-api.add_resource(SubuserResources, "/api/users/subusers")
+api.add_resource(SubuserResources, "/api/users/subusers", "/api/users/subusers/<int:id>")
 
 api.add_resource(PackageTrackDetail, "/api/users/track")
 # api.add_resource()
 # Endpoint untuk api subusers
-api.add_resource(SubuserCategorySummaryResources, "/api/subuser/summary/category")
 api.add_resource(SubuserSummaryResources, "/api/subuser/summary")
+api.add_resource(SubuserCategorySummaryResources, "/api/subuser/summary/category")
 api.add_resource(SubuserPackagesSummaryResources, "/api/subuser/summary/packages")
 api.add_resource(SubuserPackageTrackDetail, "/api/subuser/packages/track")
 
