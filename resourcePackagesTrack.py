@@ -35,7 +35,7 @@ class PackageTrackDetail(Resource):
                                 .filter(PackagesTrack.code == args['code']).first()
 
             if qry is None:
-                return {"message":"Items / Package not Found or maybe it has been sold"} , 404
+                return {"message":"Items / Package not Found"} , 404
 
             # Status True artinya belum terjual / masih di gudang
             # Status False artinya sudah terjual
