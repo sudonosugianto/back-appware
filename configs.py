@@ -45,4 +45,4 @@ def unathorized_message(error_string):
 
 # @app.route("/")
 # def webprint():
-#     return render_template('index.html')
+#     return render_template('docs/index.html')
