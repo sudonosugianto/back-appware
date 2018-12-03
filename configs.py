@@ -43,6 +43,6 @@ def unathorized_message(error_string):
 
 # Page Untuk Halaman Home
 
-@app.route("/")
-def webprint():
-    return render_template('index.html')
+# @app.route("/")
+# def webprint():
+#     return render_template('index.html')

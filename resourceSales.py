@@ -36,9 +36,9 @@ class SaleResources(Resource):
         for i in range(0,saleQty):
             qryGoSale[i].salesID = saleID
             qryGoSale[i].status = False
-            changeStatus = list(qryGoSale[i].code)
-            changeStatus[-1:] ="F"
-            qryGoSale[i].code = "".join(changeStatus)
+            # changeStatus = list(qryGoSale[i].code)
+            # changeStatus[-1:] ="F"
+            # qryGoSale[i].code = "".join(changeStatus)
             qryGoSale[i].updated_at = db.func.current_timestamp()
             db.session.commit()
             listTrack.append(qryGoSale[i].code)
