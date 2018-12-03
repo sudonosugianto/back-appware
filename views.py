@@ -4,78 +4,123 @@ from flask_apidoc import ApiDoc
 app = Flask(__name__)
 doc = ApiDoc(app=app)
 
-
-@app.route('/users', methods=['POST'])
-def add_user():
+@app.route('/api/subuser/summary')
+def get_summary():
     """
-    @api {post} /user Adds a new User
+    @api {get} /api/subuser/summary Gets summary
     @apiVersion 1.0.0
-    @apiName add_user
-    @apiGroup User
-    @apiParam {String}      username        The user's username.
-    @apiParam {String}      first_name      The first name of the User.
-    @apiParam {String}      last_name       the last name of the User.
-    @apiParam {Object}      profile         The profile data
-    @apiParam {Number}      profile.age     The user's age.
-    @apiParam {String}      profile.image   The user's avatar-image.
-    @apiSuccess {Number}    id              The new user id.
-    """
-    return
-
-
-@app.route('/users/<id>')
-def get_user(id):
-    """
-    @api {get} /users/:id Gets an user
-    @apiVersion 1.0.0
-    @apiName get_user
-    @apiGroup User
-    @apiDescription Gets an user for the given id.
+    @apiName get_summary
+    @apiGroup Summary
+    @apiDescription Gets summary for subuser who have authorized email and apiKey.
     @apiExample Example usage:
-    curl -i http://localhost/users/4711
-    @apiParam {Number}      id              The user's i
-    @apiSuccess {Number}    id              The user's id.
-    @apiSuccess {String}    username        The user's username.
-    @apiSuccess {String}    first_name      The first name of the User.
-    @apiSuccess {String}    last_name       The last name of the User.
-    @apiSuccess {Object}    profile         The profile data
-    @apiSuccess {Number}    profile.age     The user's age.
-    @apiSuccess {String}    profile.image   The user's avatar-image.
-    @apiError UserNotFound      The <code>id</code> of the User was not found.
+    curl -i http://localhost/api/subuser/summary
+    @apiParam {String}      email           The subuser's email.
+    @apiParam {String}      apiKey          The subuser's apiKey.
+    @apiParam {String}      dateStart       The start date of summary that subuser want to see.
+    @apiParam {String}      dateEnd         The end date after of summary that subuser want to see.
+    @apiSuccessExample {json}    Success-Response :
+        HTTP/1.1 200 OK
+        [
+            {
+                "message": "Summary per Item Package",
+                "Package": "Harddisk per kardusSSS",
+                "itemName": "Harddisk",
+                "packageName": "kardusSSS",
+                "Category": "Komputer",
+                "POQuantity": 30,
+                "salesQuantity": 40,
+                "stock": -10,
+                "adjusment": 0,
+                "actualStock": -10
+            }
+        ]
     """
     return
 
-
-@app.route('/users')
-def get_users():
+@app.route('/api/subuser/summary/category')
+def get_category_summary():
     """
-    @api {get} /users/:id Gets all the users
+    @api {get} /api/subuser/summary/category Gets category summary
     @apiVersion 1.0.0
-    @apiName get_users
-    @apiGroup User
+    @apiName get_category_summary
+    @apiGroup Category summary
+    @apiDescription Gets category summary for subuser who have authorized email and apiKey.
     @apiExample Example usage:
-    curl -i http://localhost/users
-    @apiSuccess {Object}    users                 The user data
-    @apiSuccess {Number}    users.id              The user's id.
-    @apiSuccess {String}    users.username        The user's username.
-    @apiSuccess {String}    users.first_name      The first name of the User.
-    @apiSuccess {String}    users.last_name       The last name of the User.
-    @apiSuccess {Object}    users.profile         The profile data
-    @apiSuccess {Number}    users.profile.age     The user's age.
-    @apiSuccess {String}    users.profile.image   The user's avatar-image.
+    curl -i http://localhost/api/subuser/summary/category
+    @apiParam {String}      email           The subuser's email.
+    @apiParam {String}      apiKey          The subuser's apiKey.
+    @apiSuccessExample {json}    Success-Response :
+        HTTP/1.1 200 OK
+        [
+            {
+                "category": "Komputer",
+                "itemsStock": 31,
+                "itemsSold": 51,
+                "Assets": -20
+            }
+        ]
     """
     return
 
-
-@app.route('/users/<id>', methods=['POST'])
-def update_user():
+@app.route('/api/subuser/summary/packages')
+def get_packages_summary():
     """
-    @api {post} /users/:id Updates a user
+    @api {get} /api/subuser/summary/packages Gets packages summary
     @apiVersion 1.0.0
-    @apiName update_user
-    @apiGroup User
-    @apiParam {Number}    id              The user's id
-    @apiParam {String}    first_name      The first name of the User.
-    @apiParam {String}    last_name       The last name of the User.
+    @apiName get_packages_summary
+    @apiGroup Packages summary
+    @apiDescription Gets packages summary for subuser who have authorized email and apiKey.
+    @apiExample Example usage:
+    curl -i http://localhost/api/subuser/summary/packages
+    @apiParam {String}      email           The subuser's email.
+    @apiParam {String}      apiKey          The subuser's apiKey.
+    @apiSuccessExample {json}    Success-Response :
+        HTTP/1.1 200 OK
+        [
+            {
+                "packageID": 53,
+                "packageName": "kardus",
+                "itemName": "ASUS ZEN 5AA",
+                "categoryName": "IT",
+                "packageSold": 14,
+                "packagePO": 33,
+                "assets": 19
+            }
+        ]
+    """
+    return
+
+@app.route('/api/subuser/packages/track')
+def get_packages_track():
+    """
+    @api {get} /api/subuser/packages/track Gets packages summary
+    @apiVersion 1.0.0
+    @apiName get_packages_track
+    @apiGroup Packages track
+    @apiDescription Gets packages track for subuser who have authorized email and apiKey.
+    @apiExample Example usage:
+    curl -i http://localhost/api/subuser/packages/track
+    @apiParam {String}      email           The subuser's email.
+    @apiParam {String}      apiKey          The subuser's apiKey.
+    @apiParam {String}      code            The track's code.
+    @apiSuccessExample {json}    Success-Response :
+        HTTP/1.1 200 OK
+        [
+           {
+                "code": "59-PO-35-16-T",
+                "packages.Items.id": 74,
+                "packages.Items.item": "hijab luna maya",
+                "packages.id": 59,
+                "packages.package_name": "lusinn",
+                "po.id": 35,
+                "po.suppliers.name": "PT. Luna Sejahtera",
+                "po.quantity": "5",
+                "sales.id": 0,
+                "sales.customers.fullname": null,
+                "sales.quantity": null,
+                "created_at": "Mon, 03 Dec 2018 04:32:54 -0000",
+                "updated_at": "Mon, 03 Dec 2018 04:32:54 -0000"
+            }
+        ]
     """
     return
