@@ -29,18 +29,44 @@ class PackageTrackDetail(Resource):
         parser.add_argument('code', type = str, help='code must be Integer', location ='args')
         args = parser.parse_args()
 
+        detailPackageField = {
+                "id":fields.Integer,
+                "code": fields.String,
+                "packages.Items.id":fields.Integer,
+                "packages.Items.item":fields.String,
+                "packages.id": fields.Integer,
+                "packages.package_name": fields.String,
+                "po.id":fields.Integer,
+                "po.suppliers.name":fields.String,
+                "po.quantity":fields.String,
+                "sales.id":fields.Integer,
+                "sales.customers.fullname":fields.String,
+                "sales.quantity":fields.String,
+                "created_at":fields.DateTime(dt_format='rfc822'),
+                "updated_at":fields.DateTime(dt_format='rfc822')
+            }
+        
+        
+        if id is not None:
+            qry = PackagesTrack.query.filter_by(id = id).first()
+            
+            if qry is None:
+                return {"message":"ID track is not Fpund"} , 404
+            return  marshal(qry, detailPackageField),200
+        
         if args['code'] is not None:
             qry = PackagesTrack.query.join(PO, PO.id == PackagesTrack.POID)\
                                 .filter(PO.userPOID == my_identity)\
                                 .filter(PackagesTrack.code == args['code']).first()
 
             if qry is None:
-                return {"message":"Items / Package not Found or maybe it has been sold"} , 404
+                return {"message":"Items / Package not Found"} , 404
 
             # Status True artinya belum terjual / masih di gudang
             # Status False artinya sudah terjual
             if qry.status == True:
                 detailPackageField = {
+                    "id":fields.Integer,
                     "code": fields.String,
                     "packages.Items.id": fields.Integer,
                     "packages.Items.item":fields.String,
@@ -59,6 +85,7 @@ class PackageTrackDetail(Resource):
             
             elif qry.status == False:
                 detailPackageField = {
+                    "id":fields.Integer,
                     "code": fields.String,
                     "packages.Items.id":fields.Integer,
                     "packages.Items.item":fields.String,
@@ -87,23 +114,6 @@ class PackageTrackDetail(Resource):
                 if item.status == True:
                     rows.append(item)
             
-            
-            detailPackageField = {
-                "code": fields.String,
-                "packages.Items.id":fields.Integer,
-                "packages.Items.item":fields.String,
-                "packages.id": fields.Integer,
-                "packages.package_name": fields.String,
-                "po.id":fields.Integer,
-                "po.suppliers.name":fields.String,
-                "po.quantity":fields.String,
-                "sales.id":fields.Integer,
-                "sales.customers.fullname":fields.String,
-                "sales.quantity":fields.String,
-                "created_at":fields.DateTime(dt_format='rfc822'),
-                "updated_at":fields.DateTime(dt_format='rfc822')
-            }
-
             return marshal(rows, detailPackageField)
 
 
