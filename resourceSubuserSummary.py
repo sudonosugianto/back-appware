@@ -97,6 +97,8 @@ class SubuserSummaryResources(Resource):
 
                 tmp = { "message":"Summary per Item Package", 
                     "Package": itemName,
+                    "itemName": qryPackage[i].Items.item,
+                    "packageName": qryPackage[i].package_name,
                     "Category": catName,
                     "POQuantity": totalPO,
                     "salesQuantity": totalSales,
