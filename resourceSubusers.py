@@ -2,6 +2,7 @@ from flask_restful import Resource, Api, reqparse, marshal, fields
 from flask_jwt_extended import JWTManager,create_access_token,get_jwt_identity, jwt_required, get_jwt_claims, verify_jwt_in_request
 import datetime
 from strgen import StringGenerator
+from sqlalchemy import or_, desc
 # from werkzeug.security import generate_password_hash
 
 from models import db
@@ -55,11 +56,38 @@ class SubuserResources(Resource):
 
 
     @jwt_required
-    def get(self):
+    def get(self, id=None):
 
         my_identity = get_jwt_identity()
 
         qry = Subusers.query.filter(Subusers.userID == my_identity)
+
+        #   get by id
+
+        if id != None:
+            qry = qry.filter(Subusers.id == id)
+
+            rows = []
+
+            for row in qry.all():
+                rows.append(marshal(row, subuser_fields))
+
+            if rows == []:
+                return {'message': 'subuser not found'}, 404
+
+            return {
+                "message": "success",
+                "subuser": rows
+            }, 200
+
+        parser=reqparse.RequestParser()
+        parser.add_argument('search',type=str,location='args')
+        args=parser.parse_args()
+
+        if args['search'] is not None:
+                search = args["search"]
+                qry = qry.filter(or_(Subusers.fullname.like('%'+search+'%'),Subusers.subuser_type.like('%'+search+'%')))\
+                                .order_by(Subusers.fullname)
 
         rows = []
 

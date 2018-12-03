@@ -1,8 +1,8 @@
 {
-    "name": "Flask REST API",
+    "name": "Flask REST API - API APPWARE",
     "version": "1.0.0",
-    "description": "A Flask REST API example",
-    "title": "A Flask REST API example",
+    "description": "A Flask REST API example - APPWARE",
+    "title": "A Flask REST API example - APPWARE",
     "url" : "http://localhost:5000"
   }
   
