@@ -13,7 +13,7 @@ def get_summary():
     @apiGroup Summary
     @apiDescription Gets summary for subuser who have authorized email and apiKey.
     @apiExample Example usage:
-    curl -i http://localhost/api/subuser/summary
+    curl -i https://api.appware.tech/api/subuser/summary
     @apiParam {String}      email           The subuser's email.
     @apiParam {String}      apiKey          The subuser's apiKey.
     @apiParam {String}      dateStart       The start date of summary that subuser want to see.
@@ -34,6 +34,16 @@ def get_summary():
                 "actualStock": 10
             }
         ]
+    @apiErrorExample {json} Error-Response:
+        HTTP/1.1 404 Not Found
+        {
+            "message": "data not found"
+        }
+    @apiErrorExample {json} Error-Response:
+        HTTP/1.1 401 Unauthorized
+        {
+            "message": "unauthorized"
+        }
     """
     return
 
@@ -46,7 +56,7 @@ def get_category_summary():
     @apiGroup Category summary
     @apiDescription Gets category summary for subuser who have authorized email and apiKey.
     @apiExample Example usage:
-    curl -i http://localhost/api/subuser/summary/category
+    curl -i https://api.appware.tech/api/subuser/summary/category
     @apiParam {String}      email           The subuser's email.
     @apiParam {String}      apiKey          The subuser's apiKey.
     @apiSuccessExample {json}    Success-Response :
@@ -59,19 +69,30 @@ def get_category_summary():
                 "Assets": 20
             }
         ]
+    @apiErrorExample {json} Error-Response:
+        HTTP/1.1 404 Not Found
+        {
+            "message": "data not found"
+        }
+    @apiErrorExample {json} Error-Response:
+        HTTP/1.1 401 Unauthorized
+        {
+            "message": "unauthorized"
+        }
     """
     return
 
 @app.route('/api/subuser/summary/packages')
 def get_packages_summary():
     """
+
     @api {get} /api/subuser/summary/packages Gets packages summary
     @apiVersion 1.0.0
     @apiName get_packages_summary
     @apiGroup Packages summary
     @apiDescription Gets packages summary for subuser who have authorized email and apiKey.
     @apiExample Example usage:
-    curl -i http://localhost/api/subuser/summary/packages
+    curl -i https://api.appware.tech/api/subuser/summary/packages
     @apiParam {String}      email           The subuser's email.
     @apiParam {String}      apiKey          The subuser's apiKey.
     @apiSuccessExample {json}    Success-Response :
@@ -87,6 +108,16 @@ def get_packages_summary():
                 "assets": 19
             }
         ]
+    @apiErrorExample {json} Error-Response:
+        HTTP/1.1 404 Not Found
+        {
+            "message": "data not found"
+        }
+    @apiErrorExample {json} Error-Response:
+        HTTP/1.1 401 Unauthorized
+        {
+            "message": "unauthorized"
+        }
     """
     return
 
@@ -99,7 +130,7 @@ def get_packages_track():
     @apiGroup Packages track
     @apiDescription Gets packages track for subuser who have authorized email and apiKey.
     @apiExample Example usage:
-    curl -i http://localhost/api/subuser/packages/track
+    curl -i https://api.appware.tech/api/subuser/packages/track
     @apiParam {String}      email           The subuser's email.
     @apiParam {String}      apiKey          The subuser's apiKey.
     @apiParam {String}      code            The track's code.
@@ -122,5 +153,16 @@ def get_packages_track():
                 "updated_at": "Mon, 03 Dec 2018 04:32:54 -0000"
             }
         ]
+    @apiErrorExample {json} Error-Response:
+        HTTP/1.1 401 Unauthorized
+        {
+            "message": "unauthorized"
+        }
+
+    @apiErrorExample {json} Error-Response:
+        HTTP/1.1 404 Not Found
+        {
+            "message":"Items / Package not Found or maybe it has been sold"
+        }
     """
     return

@@ -30,7 +30,6 @@ class SubuserSummaryResources(Resource):
         parser.add_argument("apiKey", type=str, location="args", required=True, help="apiKey must be string and exist")
         parser.add_argument("dateStart", type=str, location="args", help="Date Time must be in format YYYY-MM-DD HH:MM:SS")
         parser.add_argument("dateEnd", type=str, location="args", help="Date Time must be in format YYYY-MM-DD HH:MM:SS")
-        parser.add_argument("search", type=str, location="args", help="search must string")
         args = parser.parse_args()
 
         qrySubuserByEmail = Subusers.query.filter_by(email=args["email"]).first()
@@ -109,7 +108,7 @@ class SubuserSummaryResources(Resource):
                 summary.append(tmp)
 
             if summary == []:
-                return {"message": "data not found"}
+                return {"message": "data not found"}, 404
                 
             return summary
 
