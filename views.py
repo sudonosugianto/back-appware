@@ -27,11 +27,11 @@ def get_summary():
                 "itemName": "Harddisk",
                 "packageName": "kardusSSS",
                 "Category": "Komputer",
-                "POQuantity": 30,
-                "salesQuantity": 40,
-                "stock": -10,
+                "POQuantity": 40,
+                "salesQuantity": 30,
+                "stock": 10,
                 "adjusment": 0,
-                "actualStock": -10
+                "actualStock": 10
             }
         ]
     """
@@ -54,9 +54,9 @@ def get_category_summary():
         [
             {
                 "category": "Komputer",
-                "itemsStock": 31,
-                "itemsSold": 51,
-                "Assets": -20
+                "itemsStock": 51,
+                "itemsSold": 31,
+                "Assets": 20
             }
         ]
     """
