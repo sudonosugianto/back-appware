@@ -1,0 +1,14 @@
+define({
+  "name": "API APPWARE",
+  "version": "0.1.0",
+  "description": "Solusi Praktis Manajemen Inventori Online Pengusaha Indonesia dengan teknologi REST-API",
+  "apidoc": "0.3.0",
+  "sampleUrl": false,
+  "defaultVersion": "0.0.0",
+  "generator": {
+    "name": "apidoc",
+    "time": "2018-11-30T13:51:05.145Z",
+    "url": "http://apidocjs.com",
+    "version": "0.17.7"
+  }
+});

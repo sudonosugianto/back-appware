@@ -42,7 +42,7 @@ class TransactionsSummaryResources(Resource):
         
         countSales = len(listTotalPrice)
 
-        averageSalesPerTransactions = totalSales / countSales
+        averageSalesPerTransactions = totalSales // countSales
         
         return {
             "totalSales": totalSales,
