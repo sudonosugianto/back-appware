@@ -1,7 +1,7 @@
 define({ "api": [
   {
     "type": "get",
-    "url": "/api/subuser/summary/category",
+    "url": "api/subuser/summary/category",
     "title": "Gets category summary",
     "version": "1.0.0",
     "name": "get_category_summary",
@@ -22,19 +22,51 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "email",
-            "description": "<p>The subuser's email.</p>"
+            "description": "<p>Mandatory The subuser's email.</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
             "field": "apiKey",
-            "description": "<p>The subuser's apiKey.</p>"
+            "description": "<p>Mandatory The subuser's apiKey.</p>"
           }
         ]
       }
     },
     "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "category",
+            "description": "<p>The name of category that will be summarize.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "itemsStock",
+            "description": "<p>Total quantity of PO of category.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "itemsSold",
+            "description": "<p>Total quantity of sales of category.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Assets",
+            "description": "<p>Total quantity of assets of category.</p>"
+          }
+        ]
+      },
       "examples": [
         {
           "title": "Success-Response :",
@@ -62,7 +94,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/api/subuser/summary/packages",
+    "url": "api/subuser/summary/packages",
     "title": "Gets packages summary",
     "version": "1.0.0",
     "name": "get_packages_summary",
@@ -83,19 +115,72 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "email",
-            "description": "<p>The subuser's email.</p>"
+            "description": "<p>Mandatory The subuser's email.</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
             "field": "apiKey",
-            "description": "<p>The subuser's apiKey.</p>"
+            "description": "<p>Mandatory The subuser's apiKey.</p>"
           }
         ]
       }
     },
     "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "packageID",
+            "description": "<p>The id of package that will be summarize.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "packageName",
+            "description": "<p>Package name that will be summarize.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "itemName",
+            "description": "<p>Item name that will be summarize.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "categoryName",
+            "description": "<p>Category of the package that will be summarize.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "packageSold",
+            "description": "<p>Total quantity of sales of package.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "packagePO",
+            "description": "<p>Total quantity of PO of package.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "assets",
+            "description": "<p>Total quantity of assets of package.</p>"
+          }
+        ]
+      },
       "examples": [
         {
           "title": "Success-Response :",
@@ -123,7 +208,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/api/subuser/packages/track",
+    "url": "api/subuser/packages/track",
     "title": "Gets packages summary",
     "version": "1.0.0",
     "name": "get_packages_track",
@@ -144,26 +229,121 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "email",
-            "description": "<p>The subuser's email.</p>"
+            "description": "<p>Mandatory The subuser's email.</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
             "field": "apiKey",
-            "description": "<p>The subuser's apiKey.</p>"
+            "description": "<p>Mandatory The subuser's apiKey.</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
             "field": "code",
-            "description": "<p>The track's code.</p>"
+            "description": "<p>Mandatory The track's code.</p>"
           }
         ]
       }
     },
     "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>The track's code.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "packages.Items.id",
+            "description": "<p>The id's of item.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "packages.Items.item",
+            "description": "<p>Name of item.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "packages.id",
+            "description": "<p>The id's of package.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "packages.package_name",
+            "description": "<p>Name of package.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "po.id",
+            "description": "<p>The id's of PO.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "po.suppliers.name",
+            "description": "<p>Name of supplier.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "po.quantity",
+            "description": "<p>The quantity of PO.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "sales.id",
+            "description": "<p>The id's of sales.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "sales.customers.fullname",
+            "description": "<p>Name of customer.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "sales.quantity",
+            "description": "<p>The quantity of sales.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "created_at",
+            "description": "<p>the time when the sale occurred.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "updated_at",
+            "description": "<p>the time when the sale updated.</p>"
+          }
+        ]
+      },
       "examples": [
         {
           "title": "Success-Response :",
@@ -191,7 +371,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/api/subuser/summary",
+    "url": "api/subuser/summary",
     "title": "Gets summary",
     "version": "1.0.0",
     "name": "get_summary",
@@ -212,33 +392,107 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "email",
-            "description": "<p>The subuser's email.</p>"
+            "description": "<p>Mandatory The subuser's email.</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
             "field": "apiKey",
-            "description": "<p>The subuser's apiKey.</p>"
+            "description": "<p>Mandatory The subuser's apiKey.</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
-            "optional": false,
+            "optional": true,
             "field": "dateStart",
-            "description": "<p>The start date of summary that subuser want to see.</p>"
+            "description": "<p>Optional The start date of summary that subuser want to see.</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
-            "optional": false,
+            "optional": true,
             "field": "dateEnd",
-            "description": "<p>The end date after of summary that subuser want to see.</p>"
+            "description": "<p>Optional The end date after of summary that subuser want to see.</p>"
           }
         ]
       }
     },
     "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>The description of HTTP response.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Package",
+            "description": "<p>The description of item name per package name.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "itemName",
+            "description": "<p>Item name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "packageName",
+            "description": "<p>Package name.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Category",
+            "description": "<p>Category of item or package.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "POQuantity",
+            "description": "<p>Total quantity of PO of package.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "salesQuantity",
+            "description": "<p>Total quantity of sales of package.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "stock",
+            "description": "<p>Total quantity of assets of package.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "adjusment",
+            "description": "<p>Total quantity of adjustments of package.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "actualStock",
+            "description": "<p>Total quantity of actual stock of package.</p>"
+          }
+        ]
+      },
       "examples": [
         {
           "title": "Success-Response :",
@@ -263,5 +517,33 @@ define({ "api": [
     },
     "filename": "./views.py",
     "groupTitle": "Summary"
+  },
+  {
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "varname1",
+            "description": "<p>No type.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "varname2",
+            "description": "<p>With type.</p>"
+          }
+        ]
+      }
+    },
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "./static/docs/main.js",
+    "group": "_home_alpha_Documents_AppWare_back_appware_static_docs_main_js",
+    "groupTitle": "_home_alpha_Documents_AppWare_back_appware_static_docs_main_js",
+    "name": ""
   }
 ] });

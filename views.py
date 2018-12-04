@@ -7,7 +7,7 @@ doc = ApiDoc(app=app)
 @app.route('/api/subuser/summary')
 def get_summary():
     """
-    @api {get} /api/subuser/summary Gets summary
+    @api {get} api/subuser/summary Gets summary
     @apiVersion 1.0.0
     @apiName get_summary
     @apiGroup Summary
@@ -61,7 +61,7 @@ def get_summary():
 @app.route('/api/subuser/summary/category')
 def get_category_summary():
     """
-    @api {get} /api/subuser/summary/category Gets category summary
+    @api {get} api/subuser/summary/category Gets category summary
     @apiVersion 1.0.0
     @apiName get_category_summary
     @apiGroup Category summary
@@ -102,7 +102,7 @@ def get_category_summary():
 def get_packages_summary():
     """
 
-    @api {get} /api/subuser/summary/packages Gets packages summary
+    @api {get} api/subuser/summary/packages Gets packages summary
     @apiVersion 1.0.0
     @apiName get_packages_summary
     @apiGroup Packages summary
@@ -148,7 +148,7 @@ def get_packages_summary():
 @app.route('/api/subuser/packages/track')
 def get_packages_track():
     """
-    @api {get} /api/subuser/packages/track Gets packages summary
+    @api {get} api/subuser/packages/track Gets packages summary
     @apiVersion 1.0.0
     @apiName get_packages_track
     @apiGroup Packages track
