@@ -61,8 +61,17 @@ class CategorySummaryResources(Resource):
                 modalPerCategory += qryPOperCategory[i].totalPrice
                 itemPOPerCategory += qryPOperCategory[i].quantity
 
+            # Nilai Assets Item 
             Assets = itemPOPerCategory - itemSellperCategory
-            meanPriceProduct = grossSalePerCategory / itemSellperCategory
+            
+
+            # Handling if nothing product has been sold 
+            if itemSellperCategory == 0:
+                meanPriceProduct = 0
+            else:
+                meanPriceProduct = grossSalePerCategory / itemSellperCategory
+
+
             profitAssets = Assets*meanPriceProduct
             margin = grossSalePerCategory - modalPerCategory
             tmp = {

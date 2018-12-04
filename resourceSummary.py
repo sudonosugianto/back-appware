@@ -60,7 +60,9 @@ class SummaryResources(Resource):
             
             for i in range(0,len(qryPackage)):
                 packageID = qryPackage[i].id
-                itemName = qryPackage[i].Items.item + ' per ' + qryPackage[i].package_name
+                itemName = qryPackage[i].Items.item + ' @ ' + qryPackage[i].package_name
+                itemNameSingle = qryPackage[i].Items.item
+                packageName = qryPackage[i].package_name
                 catName = qryPackage[i].Category.category
     
                 
@@ -94,6 +96,8 @@ class SummaryResources(Resource):
                 tmp = { "message":"Summary per Item Package",
                     "PackageID": packageID,
                     "Package": itemName,
+                    "itemName": itemNameSingle,
+                    "packageName": packageName ,
                     "Category": catName,
                     "POQuantity": totalPO,
                     "salesQuantity": totalSales,
