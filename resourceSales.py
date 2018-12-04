@@ -207,7 +207,8 @@ class SaleResources(Resource):
                     qry = qry.order_by(desc(Sales.created_at))
 
             # get all
-            qry = qry.all()
+            # Semua item deafult nya order secara desc
+            qry = qry.order_by(desc(Sales.created_at)).all()
 
             # Info Format
            

@@ -10,7 +10,7 @@ define({ "api": [
     "examples": [
       {
         "title": "Example usage:",
-        "content": "curl -i http://localhost/api/subuser/summary/category",
+        "content": "curl -i https://api.appware.tech/api/subuser/summary/category",
         "type": "json"
       }
     ],
@@ -38,7 +38,21 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response :",
-          "content": "HTTP/1.1 200 OK\n[\n    {\n        \"category\": \"Komputer\",\n        \"itemsStock\": 31,\n        \"itemsSold\": 51,\n        \"Assets\": -20\n    }\n]",
+          "content": "HTTP/1.1 200 OK\n[\n    {\n        \"category\": \"Komputer\",\n        \"itemsStock\": 51,\n        \"itemsSold\": 31,\n        \"Assets\": 20\n    }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n    \"message\": \"data not found\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n    \"message\": \"unauthorized\"\n}",
           "type": "json"
         }
       ]
@@ -57,7 +71,7 @@ define({ "api": [
     "examples": [
       {
         "title": "Example usage:",
-        "content": "curl -i http://localhost/api/subuser/summary/packages",
+        "content": "curl -i https://api.appware.tech/api/subuser/summary/packages",
         "type": "json"
       }
     ],
@@ -90,6 +104,20 @@ define({ "api": [
         }
       ]
     },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n    \"message\": \"data not found\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n    \"message\": \"unauthorized\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "filename": "./views.py",
     "groupTitle": "Packages_summary"
   },
@@ -104,7 +132,7 @@ define({ "api": [
     "examples": [
       {
         "title": "Example usage:",
-        "content": "curl -i http://localhost/api/subuser/packages/track",
+        "content": "curl -i https://api.appware.tech/api/subuser/packages/track",
         "type": "json"
       }
     ],
@@ -144,6 +172,20 @@ define({ "api": [
         }
       ]
     },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n    \"message\": \"unauthorized\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n    \"message\":\"Items / Package not Found or maybe it has been sold\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "filename": "./views.py",
     "groupTitle": "Packages_track"
   },
@@ -158,7 +200,7 @@ define({ "api": [
     "examples": [
       {
         "title": "Example usage:",
-        "content": "curl -i http://localhost/api/subuser/summary",
+        "content": "curl -i https://api.appware.tech/api/subuser/summary",
         "type": "json"
       }
     ],
@@ -200,7 +242,21 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response :",
-          "content": "HTTP/1.1 200 OK\n[\n    {\n        \"message\": \"Summary per Item Package\",\n        \"Package\": \"Harddisk per kardusSSS\",\n        \"itemName\": \"Harddisk\",\n        \"packageName\": \"kardusSSS\",\n        \"Category\": \"Komputer\",\n        \"POQuantity\": 30,\n        \"salesQuantity\": 40,\n        \"stock\": -10,\n        \"adjusment\": 0,\n        \"actualStock\": -10\n    }\n]",
+          "content": "HTTP/1.1 200 OK\n[\n    {\n        \"message\": \"Summary per Item Package\",\n        \"Package\": \"Harddisk per kardusSSS\",\n        \"itemName\": \"Harddisk\",\n        \"packageName\": \"kardusSSS\",\n        \"Category\": \"Komputer\",\n        \"POQuantity\": 40,\n        \"salesQuantity\": 30,\n        \"stock\": 10,\n        \"adjusment\": 0,\n        \"actualStock\": 10\n    }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n    \"message\": \"data not found\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n    \"message\": \"unauthorized\"\n}",
           "type": "json"
         }
       ]
