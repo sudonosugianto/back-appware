@@ -216,7 +216,9 @@ class POResources(Resource):
                     qry = qry.order_by(desc(PO.created_at))
 
             # get all
-            for row in qry.all():
+            qry = qry.order_by(desc(PO.created_at)).all()
+        
+            for row in qry:
                 rows.append(marshal(row, po_fields))
 
             if rows == []:
