@@ -95,7 +95,7 @@ class PackageTrackDetail(Resource):
         else:
             qry = PackagesTrack.query.join(PO, PO.id == PackagesTrack.POID)\
                                         .filter(PO.userPOID == my_identity)\
-                                        .order_by(desc(PackagesTrack.created_at))\
+                                        .order_by(desc(PackagesTrack.id))\
                                         .all()
             
             # Looping untuk mendapatkan semua Transaksi Barang yang Masuk
