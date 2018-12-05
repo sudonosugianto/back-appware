@@ -54,11 +54,11 @@ class SubuserSummaryResources(Resource):
                 qryPO = qryPO.filter(and_(PO.created_at >= dateStart, PO.created_at <= dateEnd))
                 qrySales = qrySales.filter(and_(Sales.created_at >= dateStart, Sales.created_at <= dateEnd))
 
-            # Fitur untuk Search
-            if args['search'] is not None:
-                search = args['search']
-                qryPackage = qryPackage.filter(or_(Packages.package_name.like("%"+search+"%"),\
-                                                Items.item.like("%"+search+"%"))).all()
+            # # Fitur untuk Search
+            # if args['search'] is not None:
+            #     search = args['search']
+            #     qryPackage = qryPackage.filter(or_(Packages.package_name.like("%"+search+"%"),\
+            #                                     Items.item.like("%"+search+"%"))).all()
             else:
                 qryPackage = qryPackage.all()
             
