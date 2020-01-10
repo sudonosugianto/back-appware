@@ -10,8 +10,8 @@ import json
 
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://appware@appware.cqca0rvctn3a.ap-southeast-1.rds.amazonaws.com:3306/appware'
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://admin:appwarepassword@appware-db.csx7kkyqt3cj.ap-southeast-1.rds.amazonaws.com:3306/appware"
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:020601@127.0.0.1/AppWare'
+# app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://admin:appwarepassword@appware-db.csx7kkyqt3cj.ap-southeast-1.rds.amazonaws.com:3306/appware"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://appware:ManoahR#%7@127.0.0.1/appware'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['JWT_SECRET_KEY'] = 'AppwareSecretKey'
 CORS(app)
